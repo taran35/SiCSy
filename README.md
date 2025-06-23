@@ -1,10 +1,10 @@
 # TO DO
-- upload file
-- rename file
-- login
-- changepassword (mail ? )
-- register (admin panel -> add account)
-- admin panel (log, users, stats)
+  - upload file
+  - rename file
+  - login
+  - changepassword (mail ? )
+  - register (admin panel -> add account)
+  - admin panel (log, users, stats)
 
   # Fonctions actuelles:
   - create file
