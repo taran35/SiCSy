@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => {
                     if (response == "error") {
-                        throw new Error('Erreur lors de la modification du fichier.');
+                        console.error('Erreur lors de la modification du fichier.');
                     } else {
                         console.log('contenu modifié');
                         logs('updateFile', parent, name, Pcontent);
@@ -405,17 +405,14 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => response.text())
                 .then(response => {
-                    if (response == "error") {
-                        throw new Error('Erreur lors de la modification du fichier.');
-                    } else if (response == "already_exist") {
-                        console.log("le fichier existe deja");
-                        alert('le fichier existe deja');
-                    } else if (response == 'success') {
+                    if (response == 'success') {
                         console.log('fichier créé');
                         logs('createFile', parent, fileName, 'null');
                         openTextEditor(fileName, parent);
                         getFiles(parent);
 
+                    } else {
+                        console.warn('Échec :', response);
                     }
                 })
 
@@ -436,14 +433,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function downloadFile(name, parent) {
         const Sparent = String(parent);
         const Sname = String(name);
-        fetch('./main/php/getfilecontent-test.php?parent=' + encodeURIComponent(Sparent) + '&name=' + encodeURIComponent(Sname), {
+        fetch('./main/php/getfilecontent.php?parent=' + encodeURIComponent(Sparent) + '&name=' + encodeURIComponent(Sname), {
             headers: {
                 'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
             }
-        })// -test -> debug sans mysqli
+        })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Erreur lors du chargement du fichier.');
+                    console.warn("error");
                 }
                 return response.text();
             })
@@ -473,14 +470,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.text())
             .then(response => {
-                if (response == "error") {
-                    throw new Error('Erreur lors de la suppression du fichier.');
-                } else if (response == 'success') {
+                if (response == 'success') {
                     console.log('fichier supprimé');
                     logs('deleteFile', parent, name, 'null');
                     getFiles(parent);
-                } else if (response == "erreur_mysql") {
-                    console.error('erreur mysql')
+                } else {
+                    console.warn('Échec :', response);
                 }
             })
     }
@@ -517,17 +512,12 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => response.text())
                 .then(response => {
-                    if (response == "error") {
-                        console.error('Erreur lors de la création du dossier.');
-                    } else if (response == 'success') {
+                    if (response == 'success') {
                         console.log('dossier créé');
                         logs('createFolder', parent, folderName, 'null');
                         getFiles(parent);
-                    } else if (response == "erreur_mysql") {
-                        console.error('erreur mysql')
-                    } else if (response == "already_exist") {
-                        console.log("le fichier existe deja");
-                        alert('le fichier existe deja');
+                    } else {
+                        console.warn('Échec :', response);
                     }
                 })
         });
@@ -575,20 +565,12 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => response.text())
                 .then(response => {
-                    if (response == "error") {
-                        console.error('Erreur lors de la suppression du fichier.');
-                    } else if (response == 'success') {
+                    if (response == 'success') {
                         console.log('fichier modifié');
                         logs('moveFile', parent, name, folderName);
                         getFiles(parent);
-                    } else if (response == "erreur_mysql") {
-                        console.error('erreur mysql')
-                    } else if (response == "inexistant") {
-                        console.error('le dossier de destination n\'existe pas')
-                    } else if (response == "no_change") {
-                        console.error('le fichier de destination est deja a cet endroit')
-                    } else if (response == "name_indisp") {
-                        console.error('il existe deja un fichier avec ce nom dans le dossier de destination')
+                    } else {
+                        console.warn('Échec :', response);
                     }
                 })
         });
@@ -605,29 +587,27 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.appendChild(overlay);
     }
 
-//DELETE FOLDER
- function deleteFolder(parent, name) {
-  fetch('./main/php/deleteFolder.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name), {
-                headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+    //DELETE FOLDER
+    function deleteFolder(parent, name) {
+        fetch('./main/php/deleteFolder.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name), {
+            headers: {
+                'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+            }
+        })
+            .then(response => response.text())
+            .then(response => {
+                if (response == 'success') {
+                    console.log('dossier supprimé');
+                    logs('deleteFolder', parent, name, 'null');
+                    getFiles(parent);
+                } else {
+                    console.warn('Échec :', response);
                 }
             })
-                .then(response => response.text())
-                .then(response => {
-                    if (response == "error") {
-                        console.error('Erreur lors de la suppression du dossier.');
-                    } else if (response == 'success') {
-                        console.log('dossier supprimé');
-                        logs('deleteFolder', parent, name, 'null');
-                        getFiles(parent);
-                    } else if (response == "erreur_mysql") {
-                        console.error('erreur mysql')
-                    } 
-                })
- }
+    }
 
 
-//SHOW DELETE CONFIRMATION FOLDER
+    //SHOW DELETE CONFIRMATION FOLDER
     function showDeleteConfirmationFolder(parent, name) {
         const confirmationOverlay = document.createElement('div');
         confirmationOverlay.classList.add('overlay');
@@ -675,12 +655,10 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.text())
             .then(response => {
-                if (response == "error") {
-                    throw new Error('Erreur logs.');
-                } else if (response == 'success') {
+                if (response == 'success') {
                     console.log('update');
-                } else if (response == "erreur_mysql") {
-                    console.error('erreur mysql')
+                } else {
+                    console.warn('Échec :', response);
                 }
             })
     }

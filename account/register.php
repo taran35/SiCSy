@@ -130,7 +130,8 @@ if (isset($_SESSION['username'])) {
         fetch('account-create.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
             },
             body: new URLSearchParams({
                 'email': mail,
@@ -138,12 +139,12 @@ if (isset($_SESSION['username'])) {
                 'pseudo': pseudo
             })
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
+            .then(response => response.text())
+            .then(response => {
+                if (response == 'success') {
                     console.log('compte créé');
                 } else {
-                    console.warn('Échec :', data.message);
+                    console.warn('Échec :', response);
                 }
             })
             .catch(error => console.error(error));

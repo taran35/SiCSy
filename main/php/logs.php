@@ -24,14 +24,14 @@ try {
     $sql = "INSERT INTO logs (IP, path, content, type) VALUES (?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
     if (!$stmt) {
-        throw new Exception('Erreur de préparation de la requête SQL : ' . $mysqli->error);
+        echo "erreur_mysql";
     }
 
     $stmt->bind_param("ssss", $ip, $path, $content, $type);
 
 
     if (!$stmt->execute()) {
-        throw new Exception('Erreur lors de l\'exécution de la requête : ' . $stmt->error);
+        echo "erreur_mysql";
     }
 
 

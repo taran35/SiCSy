@@ -8,7 +8,7 @@ $parent = $_GET['parent'] ?? '/';
 
 if ($parent === null) {
     http_response_code(400);
-    echo json_encode(['error' => 'Merci de spécifier un dossier']);
+    echo 'error';
     exit;
 }
 
@@ -16,7 +16,7 @@ try {
     $sql = "SELECT name, type FROM files WHERE parent = ?";
     $stmt = $mysqli->prepare($sql);
     if (!$stmt) {
-        throw new Exception('Erreur de préparation de la requête SQL');
+        echo'erreur_mysql';
     }
 
     $stmt->bind_param("s", $parent);
@@ -38,5 +38,5 @@ try {
 
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['error' => $e->getMessage()]);
+    echo 'error';
 }

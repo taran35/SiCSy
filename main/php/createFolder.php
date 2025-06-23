@@ -26,7 +26,7 @@ try {
 
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
-        echo 'already_exist';
+        echo 'folder_already_exist';
     } else {
         $sql = "INSERT INTO files (parent, name, content, type) VALUES (?, ?, '', 'folder')";
         $stmt = $mysqli->prepare($sql);

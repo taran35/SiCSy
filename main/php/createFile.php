@@ -29,7 +29,7 @@ try {
 
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
-        echo 'already_exist';
+        echo 'file_already_exist';
     } else {
         $sql = "INSERT INTO files (parent, name, content, type) VALUES (?, ?, '', 'files')";
         $stmt = $mysqli->prepare($sql);

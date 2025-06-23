@@ -19,13 +19,13 @@ try {
     $sql = "UPDATE files SET content = ? WHERE parent = ? AND name = ? AND type = 'files'";
     $stmt = $mysqli->prepare($sql);
     if (!$stmt) {
-        throw new Exception('Erreur de préparation de la requête SQL : ' . $mysqli->error);
+        echo('erreur_mysql');
     }
 
     $stmt->bind_param("sss", $content, $parent, $name);
 
     if (!$stmt->execute()) {
-        throw new Exception('Erreur lors de l\'exécution de la requête : ' . $stmt->error);
+        echo('erreur_mysql');
     }
 
 
