@@ -1,8 +1,8 @@
 <?php
-$host = '136.243.63.156';
-$db = 's173_files_cloud';
-$user = 'u173_HLF2xj4qgm';
-$pass = 'ygEWQ=5!=5Nty=JZpDZYn^e7';
+$host = 'host';
+$db = 'db';
+$user = 'user';
+$pass = 'pass';
 
 
 

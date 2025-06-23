@@ -1,9 +1,14 @@
 <?php
-$host = '136.243.63.156';
-$db = 's43_Cloudtest';
-$user = 'u43_NSgID6NiWo';
-$pass = 'N+JZdc@X2Q9yNvhQ6L@+h5=3';
-$charset = 'utf8mb4';
+$host = 'host';
+$db = 'db';
+$user = 'user';
+$pass = 'pass';
 
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+
+$mysqli = new mysqli($host, $user, $pass, $db);
+$mysqli->set_charset("utf8");
+if ($mysqli->connect_error) {
+    die("Erreur de connexion:" . $mysqli->connect_error);
+    echo 'erreur_mysql';
+}
