@@ -5,6 +5,7 @@
   - changepassword (mail ? )
   - register (admin panel -> add account)
   - admin panel (log, users, stats)
+  - envoie par mail generate_code.php (requis serveur smtp)
 
   # Fonctions actuelles:
   - create file
