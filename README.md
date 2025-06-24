@@ -1,8 +1,8 @@
 # TO DO
   - upload file
   - rename file
-  - changepassword (mail ? )
   - envoie par mail generate_code.php (requis serveur smtp)
+  - changemail (password-modif.php)
   - visualisation des erreurs (erreurs en propre, pas de visibilité des erreurs mysql)
 
 
