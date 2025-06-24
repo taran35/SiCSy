@@ -29,18 +29,21 @@ if (isset($_SESSION['parent'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/monokai.min.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 </head>
 
 <body>
-    <h1>Bienvenue, <?= htmlspecialchars($username) ?> !</h1>
+    <div id="welcome">
+        <h1>Bienvenue <span><?= htmlspecialchars($username) ?></span> !</h1>
+    </div>
 
     <h2>Fichiers disponibles :</h2>
     <div id="buttons" class="buttons"></div>
     <div id="file-container">
     </div>
 
-    <p><a href="./account/logout.php">Se déconnecter</a></p>
+    <p><a href="account/logout.php">Se déconnecter</a></p>
 
 
 

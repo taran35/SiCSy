@@ -26,3 +26,5 @@ if ($result->num_rows == 1) {
 } else {
     echo "code_invalide";
 }
+$stmt->close();
+$mysqli->close();

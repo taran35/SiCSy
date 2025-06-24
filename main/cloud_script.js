@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const fileList = document.getElementById('buttons');
 
         const createFileButton = document.createElement('button');
-        createFileButton.textContent = 'Créer un fichier';
+        createFileButton.textContent = '📄 Créer un fichier';
         createFileButton.classList.add('create-file-button', 'button');
         createFileButton.addEventListener('click', function () {
             createFile(directory);
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fileList.appendChild(createFileButton);
 
         const uploadFileButton = document.createElement('button');
-        uploadFileButton.textContent = 'Téléverser un fichier';
+        uploadFileButton.textContent = '⬆️ Téléverser un fichier';
         uploadFileButton.classList.add('upload-file-button', 'button');
         uploadFileButton.addEventListener('click', function () {
             uploadFile(directory);
@@ -165,13 +165,14 @@ document.addEventListener("DOMContentLoaded", function () {
         fileList.appendChild(uploadFileButton);
 
         const createFolderButton = document.createElement('button');
-        createFolderButton.textContent = 'Créer un dossier';
+        createFolderButton.textContent = '📁 Créer un dossier';
         createFolderButton.classList.add('create-folder-button', 'button');
         createFolderButton.addEventListener('click', function () {
             createFolder(directory);
         });
         fileList.appendChild(createFolderButton);
     }
+
     //UPDATE div buttons
     function removeButtons(id) {
         var boutons = document.getElementsByClassName(id);

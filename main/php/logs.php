@@ -1,11 +1,11 @@
 <?php
 require_once 'secure.php';
 require_once '../fbdd.php';
-
+session_start();    
 $path = $_GET['path'] ?? '/';
 $type = $_GET['type'] ?? null;
 $content = $_GET['content'] ?? null;
-
+$user = $_SESSION['username'];
 if ($type === null) {
     http_response_code(400);
     echo 'error';
@@ -21,13 +21,13 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
 try {
 
-    $sql = "INSERT INTO logs (IP, path, content, type) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO logs (IP, path, content, type, user) VALUES (?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
     if (!$stmt) {
         echo "erreur_mysql";
     }
 
-    $stmt->bind_param("ssss", $ip, $path, $content, $type);
+    $stmt->bind_param("sssss", $ip, $path, $content, $type, $user);
 
 
     if (!$stmt->execute()) {
