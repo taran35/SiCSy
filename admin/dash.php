@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once 'adm.php';
-
 require_once '../account/bdd.php';
 
 $res_logs = $mysqli->query("SELECT COUNT(*) AS total FROM logs");
@@ -10,13 +9,7 @@ $total_logs = ($res_logs && $row = $res_logs->fetch_assoc()) ? $row['total'] : 0
 $res_users = $mysqli->query("SELECT COUNT(*) AS total FROM users");
 $total_users = ($res_users && $row = $res_users->fetch_assoc()) ? $row['total'] : 0;
 
-
-
-
-$log_counts = [];
 $log_dates = [];
-
-
 $period = new DatePeriod(
     new DateTime('-7 days'),
     new DateInterval('P1D'),
@@ -40,179 +33,202 @@ if ($result) {
     }
 }
 
-
 $log_labels = array_keys($log_dates);
 $log_data = array_values($log_dates);
 
 $mysqli->close();
-
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Tableau de bord admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="base.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
+
+
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+            align-items: start;
+            min-height: 60vh;
         }
 
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            margin: 1rem;
-            border-radius: 15px;
+        .stats-box {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .container {
-            padding-left: 2rem;
-            max-width: 70%;
-            text-align: center;
+        .stats-card {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #007bff;
+        }
+
+        .stats-card .icon {
+            font-size: 2.8rem;
+            line-height: 1;
+        }
+
+        .stats-card span.value {
+            font-size: 2rem;
+            color: #222;
         }
 
         .button-group {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            flex-wrap: nowrap;
             gap: 1rem;
-            margin: 2rem 0;
-            width: fit-content;
+            margin-top: 2rem;
         }
 
         .button-group a {
-            padding: 1rem 2rem;
+            padding: 1rem 1.5rem;
             background-color: #007bff;
             color: white;
             text-decoration: none;
-            border-radius: 8px;
-            transition: background-color 0.3s;
+            border-radius: 12px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 123, 255, 0.4);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
         .button-group a:hover {
             background-color: #0056b3;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(0, 86, 179, 0.7);
+        }
+
+        .chart-container {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.15);
+        }
+
+        .chart-container h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.6rem;
+            color: #0056b3;
+            text-align: center;
         }
 
         canvas {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             max-width: 100%;
+            border-radius: 12px;
         }
 
-        footer {
-            padding: 1rem;
-            text-align: center;
-            background-color: #222;
-            color: white;
-            margin: 1rem;
-            border-radius: 15px;
+
+
+[data-theme="dark"] {
+
+
+        .stats-box,
+        .chart-container {
+            background-color: #2a2a2a;
+            color: #ddd;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
         }
 
-        footer a {
-            color: #00c4ff;
-            text-decoration: none;
+        .stats-card {
+            color: #3399ff;
         }
 
-        .box {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            width: 100%;
-            padding: 10px;
+        .stats-card span.value {
+            color: #eee;
         }
 
-        .stats-box {
-            width: fit-content;
-            background-color: white;
-            border-radius: 8px;
-            padding: 1rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-            width: 100%;
+        .button-group a {
+            background-color: #0d6efd;
+            box-shadow: 0 2px 6px rgba(13, 110, 253, 0.6);
         }
 
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1e1e1e;
-                color: #ddd;
+        .button-group a:hover {
+            background-color: #084ecc;
+            box-shadow: 0 6px 18px rgba(8, 78, 204, 0.9);
+        }
+
+
+    }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
-
-            canvas {
-                background-color: #2a2a2a;
-            }
-
-            header,
-            .button-group a {
-                background-color: #0d6efd;
-            }
-
-            footer {
-                background-color: #111;
-            }
-
-            .stats-box {
-                background-color: #2a2a2a;
-                color: #fff;
-            }
-        }
-
-        .box2, .box3 {
-            display: flex;
-            flex-direction: column;
-            margin: 20px;
-            padding: 7px;
-            text-align: center;
-            align-items: center;
         }
     </style>
 </head>
 
 <body>
+<header>
+    <div style="display:flex; justify-content: space-between; align-items:center;">
+        <div>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> 👋</div>
+        <button id="theme-toggle" aria-label="Basculer le thème" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🌙</button>
+    </div>
+</header>
 
-    <header>
-        <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['username']); ?> 👋</h1>
-    </header>
-    <div class="box">
-        <div class="box2">
-            <div class="stats-box">
-                <h3>📊 Statistiques</h3>
-                <ul style="list-style: none; padding-left: 0;">
-                    <li><strong>Logs totaux :</strong> <?= $total_logs ?></li>
-                    <li><strong>Utilisateurs :</strong> <?= $total_users ?></li>
-                </ul>
+
+
+    <div class="dashboard">
+        <section class="stats-box">
+            <div class="stats-card">
+                <div class="icon">📊</div>
+                <div>Logs totaux : <span class="value"><?= $total_logs ?></span></div>
             </div>
+            <div class="stats-card">
+                <div class="icon">👥</div>
+                <div>Utilisateurs : <span class="value"><?= $total_users ?></span></div>
+            </div>
+
             <div class="button-group">
                 <a href="logs.php">Voir les logs</a>
                 <a href="register.php">Ajouter un utilisateur</a>
                 <a href="users.php">Gérer les utilisateurs</a>
             </div>
-        </div>
+        </section>
 
-        <div class="container">
+        <section class="chart-container">
             <h2>Activité du cloud sur les 7 derniers jours</h2>
             <canvas id="logChart" width="600" height="300"></canvas>
-        </div>
-        <div class="box3">
-            <div class="button-group">
-                <a href="gestion-admin.php">Gerer les admins</a>
+        </section>
+
+        <section class="stats-box">
+            <div class="button-group" style="margin-top: 2rem;">
+                <a href="gestion-admin.php">Gérer les admins</a>
                 <a href="add-admin.php">Ajouter un admin</a>
             </div>
-        </div>
+        </section>
     </div>
 
     <footer>
-        <p><a href="logout.php">Se déconnecter</a></p>
+        <p><a class="logout" href="logout.php">Se déconnecter</a></p>
+        <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
     </footer>
 
     <script>
@@ -220,6 +236,11 @@ $mysqli->close();
         const data = <?php echo json_encode($log_data); ?>;
 
         const ctx = document.getElementById('logChart').getContext('2d');
+
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(0,123,255,0.5)');
+        gradient.addColorStop(1, 'rgba(0,123,255,0)');
+
         const logChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -228,35 +249,110 @@ $mysqli->close();
                     label: 'Nombre de logs',
                     data: data,
                     borderColor: '#007bff',
-                    backgroundColor: 'rgba(0,123,255,0.1)',
+                    backgroundColor: gradient,
                     tension: 0.3,
-                    pointRadius: 5,
-                    fill: true
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    fill: true,
+                    borderWidth: 3,
+                    hoverBorderWidth: 4,
+                    hoverBackgroundColor: '#0056b3',
+                    cubicInterpolationMode: 'monotone',
                 }]
             },
             options: {
                 responsive: true,
+                interaction: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+                plugins: {
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: '#007bff',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        cornerRadius: 6,
+                        padding: 10,
+                    },
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#007bff',
+                            font: {
+                                weight: '600',
+                                size: 14
+                            }
+                        }
+                    }
+                },
                 scales: {
                     x: {
                         title: {
                             display: true,
-                            text: 'Date'
+                            text: 'Date',
+                            color: '#0056b3',
+                            font: { weight: '600', size: 14 }
+                        },
+                        ticks: {
+                            color: '#0056b3',
+                            maxRotation: 45,
+                            minRotation: 45
+                        },
+                        grid: {
+                            display: false
                         }
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Logs'
+                            text: 'Logs',
+                            color: '#0056b3',
+                            font: { weight: '600', size: 14 }
                         },
                         beginAtZero: true,
-                        precision: 0
+                        ticks: {
+                            stepSize: 1,
+                            color: '#0056b3'
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        }
                     }
                 }
             }
         });
     </script>
-
-
 </body>
+<script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        themeToggleBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeToggleBtn.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+    }
+
+    function switchTheme() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggleBtn.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggleBtn.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    themeToggleBtn.addEventListener('click', switchTheme);
+</script>
+
+
 
 </html>

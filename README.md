@@ -11,7 +11,7 @@ Ce projet est un système de cloud web simple utilisant **PHP** et une base de d
 - [⚙️ Prérequis](#️-prérequis)
 - [🚀 Installation](#-installation)
 - [💡 Utilisation](#-utilisation)
-- [🖥️ Images](#-visuels)
+- [🖥️ Visuels](#-visuels)
 - [🤝 Contribution](#-contribution)
 - [📬 Contact](#-contact)
 - [📄 Licence](#-licence)
@@ -88,9 +88,13 @@ Connecte-toi avec ton compte admin pour commencer à :
 
 ## 🖥️ Visuels
 
-> **Panel utilisateur:**
-![Image 1](visuels/Image1-clair.png "Panel utilisateur theme clair") ![Image 2](visuels/Image1-sombre.png "Panel utilisateur theme sombre")
+> **Panel utilisateur :**
 
+<img src="visuels/index-clair.png" alt="Panel utilisateur theme clair" width="450" height="300" /><img src="visuels/index-sombre.png" alt="Panel utilisateur theme sombre" width="450" height="300" />
+
+> **Panel administrateur :**
+
+Bientot
 ---
 ## 🤝 Contribution
 

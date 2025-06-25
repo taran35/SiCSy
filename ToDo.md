@@ -4,6 +4,7 @@
   - envoie par mail generate_code.php (requis serveur smtp)
   - changemail (password-modif.php)
   - error file
+  - responsive (dash.php, logs.php fait)
 
   # Fonctions actuelles:
   - create file
