@@ -3,8 +3,7 @@
   - rename file
   - envoie par mail generate_code.php (requis serveur smtp)
   - changemail (password-modif.php)
-  - visualisation des erreurs (erreurs en propre, pas de visibilité des erreurs mysql)
-
+  - error file
 
   # Fonctions actuelles:
   - create file

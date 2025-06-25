@@ -2,7 +2,7 @@
 
 ## 📝 Description
 
-Ce projet est un système de cloud web simple utilisant **PHP** et une base de données **MySQL** pour stocker et gérer des fichiers. Il permet à des utilisateurs de **téléverser, consulter et organiser** leurs fichiers via une interface sécurisée (sessions, validation des utilisateurs…).
+Ce projet est un système de cloud web simple utilisant **PHP** et une base de données **MySQL** pour stocker et gérer des fichiers. Il permet à des utilisateurs de **téléverser, consulter et organiser** leurs fichiers via une interface.
 
 ---
 
@@ -44,6 +44,32 @@ Exécute les commandes SQL présentes dans le fichier [`bdd_setup.txt`](bdd_setu
 
 > ⚠️ **Important** : pense à **supprimer** les fichiers `create_first_admin.php` et `bdd.txt` après création du compte et de la base de données pour des raisons de sécurité.
 
+### 4️⃣ Paramètrage des pages d'erreurs personalisées
+ - **Apache :** insérer dans un fichier `.htaccess` à la racine du site ces lignes:
+ ```text
+    ErrorDocument 404 erreurs/404.html
+    ErrorDocument 403 erreurs/403.html
+     ErrorDocument 503 erreurs/503.html
+ ...
+ ```
+ - **Nginx :** insérer dans le fichier `nginx.conf` ces lignes:
+ ```text
+    error_page 404 /erreurs/404.html;
+    error_page 403 /erreurs/403.html;
+    error_page 503 /erreurs/503.html;
+
+    location = /erreurs/404.html {
+        internal;
+    }
+    location = /erreurs/403.html {
+        internal;
+    }
+    location = /erreurs/503.html {
+        internal;
+    }
+...
+ ```
+  Il ne reste plus qu'à redémarrer votre serveur !
 ---
 
 ## 💡 Utilisation
@@ -55,11 +81,15 @@ Connecte-toi avec ton compte admin pour commencer à :
 - Gérer les utilisateurs
 - Suivre l'activité du cloud
 
+> ⚠️ **Information** : La base de données permet de stocker des fichiers jusqu'à 10.000 caractères, pour modifier cette limite:
+1. Initialiser la base de données **files** en modifiant cette ligne `content VARCHAR(VALEUR_VOULU),` et modifier le fichier [`cloud_script.js`](cloud_script.js) à la ligne 403 `if (Pcontent.length < VALEUR_VOULU) {`
+
 ---
 
 ## 🖥️ Visuels
 
-> Bientot
+> **Panel utilisateur:**
+![Image 1](visuels/Image1-clair.png "Panel utilisateur theme clair") ![Image 2](visuels/Image1-sombre.png "Panel utilisateur theme sombre")
 
 ---
 ## 🤝 Contribution

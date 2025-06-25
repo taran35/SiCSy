@@ -43,18 +43,20 @@ if (isset($_SESSION['parent'])) {
     <div id="file-container">
     </div>
 
-    <p><a href="account/logout.php">Se déconnecter</a></p>
+
 
 
 
 </body>
 <footer>
+        <p class="logout"><a class="logout2"href="./account/logout.php">Se déconnecter</a></p>
+        <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
     <div class="theme-switch-wrapper">
         <label class="theme-switch" for="checkbox">
             <input type="checkbox" id="checkbox" />
             <div class="slider round"></div>
         </label>
-        <em>Activer theme sombre</em>
+        <em>Changer de theme</em>
     </div>
 </footer>
 
