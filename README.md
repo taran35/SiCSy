@@ -1,4 +1,4 @@
-> ⚠️ Fonction de récupération de mot de passe non fonctionnelle
+> ⚠️ Fonction de récupération de mot de passe non fonctionnelle / index.php non responsive pour l'instant
 
 # ☁️ Simple Cloud System — Gestion de fichiers en ligne avec PHP & MySQL
 
