@@ -95,7 +95,7 @@ Connecte-toi avec ton compte admin pour commencer à :
 
 > **Panel administrateur :**
 
-Bientot
+<img src="visuels/dash-clair.png" alt="Panel admin theme clair" width="450" height="300" /><img src="visuels/dash-sombre.png" alt="Panel admin theme sombre" width="450" height="300" />
 ---
 ## 🤝 Contribution
 
@@ -104,7 +104,7 @@ Tu peux :
 - Proposer des **améliorations**
 - Signaler des **bugs**
 - Ouvrir une **issue** ou une **pull request**
-- créer des modules (voir [`ce fichier`](CREATE_MODULES.md) pour en savoir plus)
+- créer des modules (voir [`ce fichier`](CREATE_MODULE.md) pour en savoir plus)
 
 Merci pour ton aide !
 
