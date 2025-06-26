@@ -15,7 +15,8 @@
 ```json
 {
     "status": "off", //Ne rien changer ici
-    "index": "index.php", //lien externe ou chemin vers un fichier de documentation, affichage ou autre
+    "index": "../index.php", //lien externe ou chemin vers un fichier de documentation, affichage ou autre
+    "index_name": "Documentation" //nom du bouton affiché sur la page modules.php
     "param": {
         "webhook_url": "https://discord.com/api/webhooks/....", //Les différents paramètres modifiables du module
         "webhook_name": "Mon super webhook"
