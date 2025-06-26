@@ -1,3 +1,5 @@
+> ⚠️ Fonction de récupération de mot de passe non fonctionnelle
+
 # ☁️ Simple Cloud System — Gestion de fichiers en ligne avec PHP & MySQL
 
 ## 📝 Description
@@ -45,14 +47,14 @@ Exécute les commandes SQL présentes dans le fichier [`bdd_setup.txt`](bdd_setu
 > ⚠️ **Important** : pense à **supprimer** les fichiers `create_first_admin.php` et `bdd.txt` après création du compte et de la base de données pour des raisons de sécurité.
 
 ### 4️⃣ Paramètrage des pages d'erreurs personalisées
- - **Apache :** insérer dans un fichier `.htaccess` à la racine du site ces lignes:
+ - **Apache :** insérer dans un fichier `.htaccess` à la racine du site ces lignes et fais tes pages d'erreurs personnalisées:
  ```text
     ErrorDocument 404 erreurs/404.html
     ErrorDocument 403 erreurs/403.html
      ErrorDocument 503 erreurs/503.html
  ...
  ```
- - **Nginx :** insérer dans le fichier `nginx.conf` ces lignes:
+ - **Nginx :** insérer dans le fichier `nginx.conf` ces lignes et fais tes pages d'erreurs personnalisées:
  ```text
     error_page 404 /erreurs/404.html;
     error_page 403 /erreurs/403.html;
@@ -82,8 +84,7 @@ Connecte-toi avec ton compte admin pour commencer à :
 - Suivre l'activité du cloud
 
 > ⚠️ **Information** : La base de données permet de stocker des fichiers jusqu'à 10.000 caractères, pour modifier cette limite:
-1. Initialiser la base de données **files** en modifiant cette ligne `content VARCHAR(VALEUR_VOULU),` et modifier le fichier [`cloud_script.js`](cloud_script.js) à la ligne 403 `if (Pcontent.length < VALEUR_VOULU) {`
-
+1. Initialiser la base de données **files** en modifiant cette ligne `content VARCHAR(VALEUR_VOULU),` et modifier le fichier [`cloud_script.js`](cloud_script.js) à la ligne 411 `if (Pcontent.length < VALEUR_VOULU) {`
 ---
 
 ## 🖥️ Visuels
@@ -103,6 +104,7 @@ Tu peux :
 - Proposer des **améliorations**
 - Signaler des **bugs**
 - Ouvrir une **issue** ou une **pull request**
+- créer des modules (voir [`ce fichier`](CREATE_MODULES.md) pour en savoir plus)
 
 Merci pour ton aide !
 

@@ -6,148 +6,228 @@ require_once 'adm.php';
 <!DOCTYPE html>
 <html>
 
-<body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un administrateur</title>
+    <link rel="stylesheet" href="base.css">
+</head>
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Ajouter un administrateur</title>
-    </head>
-    <main>
-        <div class="log">
-            <h1> ajouter un administrateur</h1>
-            <hr>
-            <br><br>
-            <form action="#" method="POST" id="form">
-                <div class="form-group">
-                    <input type="email" id="email" size="30" placeholder="Adresse email" required />
-                    <div id="emailError" class="error-message"></div>
-                </div>
-                <input type="submit" value="Ajouter" />
-                <div id="globalError" class="error-message" style="text-align: center;"></div>
-            </form>
+<body>
+    <header>
+        <div style="display:flex; justify-content: space-between; align-items:center;">
+            <button onclick="window.location.href='dash.php'" id="home" aria-label="retour a la page d'accueil" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🏠</button>
+            <div>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> 👋</div>
+            <button id="theme-toggle" aria-label="Basculer le thème" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🌙</button>
         </div>
-    </main>
+    </header>
+    <div class="container">
+        <main>
+            <div class="log">
+                <h1> ajouter un administrateur</h1>
+                <hr>
+                <br><br>
+                <div class="form">
+                <form action="#" method="POST" id="form">
+                    <div class="form-group">
+                        <input type="email" id="email" size="30" placeholder="Adresse email" required />
+                        <div id="emailError" class="error-message"></div>
+                    </div>
+                    <input type="submit" value="Ajouter" />
+                    <div id="globalError" class="error-message" style="text-align: center;"></div>
+                </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p><a class="logout" href="logout.php">Se déconnecter</a></p>
+        <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
+    </footer>
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            themeToggleBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggleBtn.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        }
+
+        function switchTheme() {
+            const theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeToggleBtn.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggleBtn.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', switchTheme);
+    </script>
 </body>
 
 </html>
 
 <style>
-    :root {
-        --login-bg: #f0f2f5;
-        --card-bg: #ffffff;
-        --input-bg: #f9f9f9;
-        --input-border: #ccc;
-        --input-focus: #007bff;
-        --btn-bg: #007bff;
-        --btn-bg-hover: #0056b3;
-        --btn-text: #ffffff;
-        --text-color: #333;
-        --link-color: #007bff;
-        --link-hover: #0056b3;
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
-
-    .error-message {
-        font-size: 13px;
-        color: red;
-        margin-top: 5px;
-        margin-bottom: 10px;
-        text-align: left;
-    }
-
-    input.error {
-        border-color: red;
-    }
-
 
     body {
-        background-color: var(--login-bg);
-        font-family: "Segoe UI", sans-serif;
-        color: var(--text-color);
-        height: 100vh;
+        background: #f5f7fa;
+        align-items: center;
+        min-height: 100vh;
+        font-family: 'Segoe UI', sans-serif;
+        color: #333;
+        padding: 1rem;
+    }
+
+    main {
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .container {
         display: flex;
         justify-content: center;
-        align-items: center;
-        margin: 0;
     }
 
     .log {
-        background-color: var(--card-bg);
+        background-color: #fff;
         padding: 40px;
         border-radius: 16px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         width: 100%;
-        max-width: 400px;
         text-align: center;
-        box-sizing: border-box;
     }
 
-
-    .log h1 {
-        font-size: 28px;
+    .reg h1 {
         margin-bottom: 20px;
-        color: darkred;
+        font-size: 26px;
     }
 
-    hr {
-        width: 100%;
-        border: 0;
-        height: 1px;
-        background-color: #ddd;
-        margin: 20px 0;
+    .reg hr {
+        border: none;
+        border-top: 1.5px solid #e0e0e0;
+        margin-bottom: 30px;
     }
 
     .form {
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 6px;
     }
 
     .form-group {
         display: flex;
         flex-direction: column;
-        align-items: stretch;
-        margin-bottom: 18px;
-    }
-
-
-    input[type="email"] {
+        margin-bottom: 14px;
         width: 100%;
-        padding: 12px 16px;
-        margin-bottom: 12px;
-        border-radius: 8px;
-        border: 1px solid var(--input-border);
-        background-color: var(--input-bg);
-        font-size: 15px;
-        box-sizing: border-box;
     }
 
-    input[type="email"]:focus {
+    .form input[type="email"] {
+        padding: 12px 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s;
+        width: 100%;
+    }
+
+    .form input:focus {
+        border-color: #4285f4;
         outline: none;
-        border-color: var(--input-focus);
+        background-color: #fff;
+    }
+
+    .form input.error {
+        border-color: #e74c3c;
+        background-color: #ffe9e9;
+    }
+
+    .error-message {
+        font-size: 13px;
+        color: red;
+        margin-top: 4px;
+        margin-bottom: 6px;
+        text-align: left;
     }
 
     input[type="submit"] {
-        margin-top: 10px;
-        padding: 12px;
-        font-size: 16px;
-        background-color: var(--btn-bg);
-        color: var(--btn-text);
+        padding: 12px 16px;
+        background-color: #4285f4;
+        color: white;
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        font-weight: bold;
+        font-size: 15px;
         transition: background-color 0.3s;
         width: 100%;
     }
 
     input[type="submit"]:hover {
-        background-color: var(--btn-bg-hover);
+        background-color: #2c6fe2;
     }
 
+    .login {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .login a {
+        color: #4285f4;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .login a:hover {
+        text-decoration: underline;
+    }
 
     @media (max-width: 480px) {
+        .reg {
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .reg h1 {
+            font-size: 22px;
+        }
+    }
+
+    [data-theme="dark"] {
+
+        .form,
         .log {
-            padding: 25px;
-            margin: 20px;
+            background-color: rgb(62, 63, 65);
+        }
+
+        input[type=email] {
+            background-color: rgb(142, 150, 158);
         }
     }
 </style>

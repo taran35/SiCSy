@@ -33,6 +33,61 @@ if ($result) {
 <head>
     <meta charset="UTF-8">
     <title>Gestion des administrateurs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="base.css">
+</head>
+<body>
+        <header>
+        <div style="display:flex; justify-content: space-between; align-items:center;">
+            <button onclick="window.location.href='dash.php'" id="home" aria-label="retour a la page d'accueil" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🏠</button>
+            <div>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> 👋</div>
+            <button id="theme-toggle" aria-label="Basculer le thème" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🌙</button>
+        </div>
+    </header>
+
+    <h1>🧑‍💻Liste des administrateurs🧑‍💻</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Pseudo</th>
+                <th>Date d’inscription</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($admin_infos as $admin): ?>
+                <tr>
+                    <td data-label="Mail"><?= htmlspecialchars($admin['mail']) ?></td>
+                    <td data-label="Pseudo"><?= htmlspecialchars($admin['pseudo']) ?></td>
+                    <td data-label="Date d'inscription"><?= $admin['created_at'] ? date('d/m/Y H:i', strtotime($admin['created_at'])) : 'Non inscrit' ?>
+                    </td>
+                    <td data-label="Action">
+                        <form method="post" action="#" style="display:inline;" class="remove-form">
+                            <input type="hidden" name="mail" value="<?= $admin['mail'] ?>">
+                            <button type="submit" class="remove-btn">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+        <footer>
+        <p><a class="logout" href="logout.php">Se déconnecter</a></p>
+        <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
+    </footer>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -106,40 +161,104 @@ if ($result) {
                 background-color: #d03a46;
             }
         }
+                [data-theme="dark"] {
+
+            tr:hover {
+                background-color: rgb(95, 92, 92);
+            }
+
+            th,
+            td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid rgb(8, 7, 7);
+            }
+            table {
+                background-color: rgb(62, 63, 65);
+            }
+            td::before {
+                color: white;
+            }
+            tbody tr {
+                background-color: rgb(62, 63, 65);
+            }
+        }
+        @media screen and (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+                width: 100%;
+            }
+
+            thead tr {
+                display: none;
+            }
+
+            tbody tr {
+                margin-bottom: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 1rem;
+                background-color: white;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            }
+
+            tbody td {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #555;
+                width: 50%;
+                display: inline-block;
+            }
+
+            .admin-badge {
+                margin-top: 0.5rem;
+                display: inline-block;
+            }
+        }
     </style>
-</head>
-
-<body>
-    <h1>Liste des administrateurs</h1>
-<p> s'auto supprimer fait tout buguer ! </p>
-    <table>
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Pseudo</th>
-                <th>Date d’inscription</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($admin_infos as $admin): ?>
-                <tr>
-                    <td><?= htmlspecialchars($admin['mail']) ?></td>
-                    <td><?= htmlspecialchars($admin['pseudo']) ?></td>
-                    <td><?= $admin['created_at'] ? date('d/m/Y H:i', strtotime($admin['created_at'])) : 'Non inscrit' ?>
-                    </td>
-                    <td>
-                        <form method="post" action="#" style="display:inline;" class="remove-form">
-                            <input type="hidden" name="mail" value="<?= $admin['mail'] ?>">
-                            <button type="submit" class="remove-btn">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
 </body>
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme');
 
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            themeToggleBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggleBtn.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        }
+
+        function switchTheme() {
+            const theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeToggleBtn.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggleBtn.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', switchTheme);
+    </script>
 </html>
 <script>
 

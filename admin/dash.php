@@ -3,8 +3,8 @@ session_start();
 require_once 'adm.php';
 require_once '../account/bdd.php';
 
-$res_logs = $mysqli->query("SELECT COUNT(*) AS total FROM logs");
-$total_logs = ($res_logs && $row = $res_logs->fetch_assoc()) ? $row['total'] : 0;
+$res_files= $mysqli->query("SELECT COUNT(*) AS total FROM files WHERE type='files'");
+$total_files = ($res_files && $row = $res_files->fetch_assoc()) ? $row['total'] : 0;
 
 $res_users = $mysqli->query("SELECT COUNT(*) AS total FROM users");
 $total_users = ($res_users && $row = $res_users->fetch_assoc()) ? $row['total'] : 0;
@@ -50,9 +50,6 @@ $mysqli->close();
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="base.css">
     <style>
-
-
-
         .dashboard {
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
@@ -139,36 +136,36 @@ $mysqli->close();
 
 
 
-[data-theme="dark"] {
+        [data-theme="dark"] {
 
 
-        .stats-box,
-        .chart-container {
-            background-color: #2a2a2a;
-            color: #ddd;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            .stats-box,
+            .chart-container {
+                background-color: #2a2a2a;
+                color: #ddd;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            }
+
+            .stats-card {
+                color: #3399ff;
+            }
+
+            .stats-card span.value {
+                color: #eee;
+            }
+
+            .button-group a {
+                background-color: #0d6efd;
+                box-shadow: 0 2px 6px rgba(13, 110, 253, 0.6);
+            }
+
+            .button-group a:hover {
+                background-color: #084ecc;
+                box-shadow: 0 6px 18px rgba(8, 78, 204, 0.9);
+            }
+
+
         }
-
-        .stats-card {
-            color: #3399ff;
-        }
-
-        .stats-card span.value {
-            color: #eee;
-        }
-
-        .button-group a {
-            background-color: #0d6efd;
-            box-shadow: 0 2px 6px rgba(13, 110, 253, 0.6);
-        }
-
-        .button-group a:hover {
-            background-color: #084ecc;
-            box-shadow: 0 6px 18px rgba(8, 78, 204, 0.9);
-        }
-
-
-    }
 
         @media (max-width: 900px) {
             .dashboard {
@@ -180,18 +177,25 @@ $mysqli->close();
 </head>
 
 <body>
-<header>
-    <div style="display:flex; justify-content: space-between; align-items:center;">
-        <div>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> 👋</div>
-        <button id="theme-toggle" aria-label="Basculer le thème" style="
+    <header>
+        <div style="display:flex; justify-content: space-between; align-items:center;">
+            <button onclick="window.location.href='dash.php'" id="home" aria-label="retour a la page d'accueil" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🏠</button>
+            <div>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> 👋</div>
+            <button id="theme-toggle" aria-label="Basculer le thème" style="
             background:none; 
             border:none; 
             color:white; 
             font-size:1.5rem; 
             cursor:pointer;
         ">🌙</button>
-    </div>
-</header>
+        </div>
+    </header>
 
 
 
@@ -199,17 +203,18 @@ $mysqli->close();
         <section class="stats-box">
             <div class="stats-card">
                 <div class="icon">📊</div>
-                <div>Logs totaux : <span class="value"><?= $total_logs ?></span></div>
+                <div>Fichiers totaux : <span class="value"><?= $total_files ?></span></div>
             </div>
             <div class="stats-card">
                 <div class="icon">👥</div>
                 <div>Utilisateurs : <span class="value"><?= $total_users ?></span></div>
             </div>
-
-            <div class="button-group">
+            <hr style="width: 80%;">
+            <div class="button-group" style="margin-top: 2rem;">
                 <a href="logs.php">Voir les logs</a>
-                <a href="register.php">Ajouter un utilisateur</a>
-                <a href="users.php">Gérer les utilisateurs</a>
+                <hr style="width: 80%;">
+                <a href="modules.php">Gérer les modules</a>
+                <a href="https://github.com/taran35/cloud/blob/main/modules.md">Voir les modules disponibles</a>
             </div>
         </section>
 
@@ -222,6 +227,12 @@ $mysqli->close();
             <div class="button-group" style="margin-top: 2rem;">
                 <a href="gestion-admin.php">Gérer les admins</a>
                 <a href="add-admin.php">Ajouter un admin</a>
+                <hr style="width: 80%;">
+            </div>
+            <div class="button-group" style="margin-top: 2rem;">
+                <a href="register.php">Ajouter un utilisateur</a>
+                <a href="users.php">Voir les utilisateurs</a>
+                <a href="delete-user.php">Retirer un utilisateur</a>
             </div>
         </section>
     </div>

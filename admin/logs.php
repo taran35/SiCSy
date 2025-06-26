@@ -17,6 +17,13 @@ require_once 'adm.php';
 <body>
     <header>
         <div style="display:flex; justify-content: space-between; align-items:center;">
+            <button onclick="window.location.href='dash.php'" id="home" aria-label="retour a la page d'accueil" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🏠</button>
             <div>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> 👋</div>
             <button id="theme-toggle" aria-label="Basculer le thème" style="
             background:none; 

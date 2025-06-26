@@ -270,6 +270,14 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             popup.appendChild(closeButton);
 
+            const renameButton = document.createElement('button');
+            renameButton.textContent = 'Renommer';
+            renameButton.addEventListener('click', function () {
+                renameFile(name, parent);
+                closePopup(overlay);
+            });
+            popup.appendChild(renameButton);
+
             overlay.appendChild(popup);
             document.body.appendChild(overlay);
         } catch {
@@ -418,6 +426,125 @@ document.addEventListener("DOMContentLoaded", function () {
             alert('contenu trop long (+10000 caractères)');
         }
     }
+
+    //RENAMEFILE
+    function renameFile(name, parent) {
+        try {
+            const overlay = document.createElement('div');
+            overlay.classList.add('overlay');
+
+            const popup = document.createElement('div');
+            popup.classList.add('popup');
+
+            const title = document.createElement('h2');
+            title.textContent = 'Renommer le fichier';
+            popup.appendChild(title);
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Nom du fichier';
+            popup.appendChild(input);
+
+            const renameButton = document.createElement('button');
+            renameButton.textContent = 'Renommer';
+            renameButton.addEventListener('click', function () {
+                const fileName = input.value.trim();
+                closePopup(overlay);
+
+                fetch('./main/php/renameFile.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name) + '&fname=' + encodeURIComponent(fileName), {
+                    headers: {
+                        'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    }
+                })
+                    .then(response => response.text())
+                    .then(response => {
+                        if (response == 'success') {
+                            logs('renameFile', parent, fileName, name);
+                            getFiles(parent);
+
+                        } else {
+                            alert('Erreur lors de la modification du fichier')
+                        }
+                    })
+
+            });
+            popup.appendChild(renameButton);
+
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Annuler';
+            closeButton.addEventListener('click', function () {
+                closePopup(overlay);
+            });
+            popup.appendChild(closeButton);
+
+            overlay.appendChild(popup);
+            document.body.appendChild(overlay);
+        } catch {
+            alert('Erreur lors de la modification du fichier')
+        }
+    }
+
+    function uploadFile(directory) {
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
+        const popup = document.createElement('div');
+        popup.classList.add('popup');
+
+        const title = document.createElement('h2');
+        title.textContent = 'Téléverser un fichier';
+        popup.appendChild(title);
+
+        const input = document.createElement('input');
+        input.type = 'file';
+        popup.appendChild(input);
+
+        const uploadButton = document.createElement('button');
+        uploadButton.textContent = 'Téléverser';
+        uploadButton.addEventListener('click', function () {
+            const file = input.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('directory', directory);
+
+                fetch('main/php/uploadFile.php', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    },
+                }).then(response => response.text())
+                    .then(response => {
+                        if (response == 'success') {
+                            logs('uploadFile', directory, file.name, 'null');
+                            getFiles(directory);
+                            closePopup(overlay);
+
+                        } else {
+                            alert('Erreur lors de l\'upload du fichier :' + response);
+                        }
+                    }).catch(error => {
+                        alert('Erreur lors de l\'upload du fichier ');
+                    });
+            } else {
+                alert('Veuillez sélectionner un fichier.');
+            }
+        });
+        popup.appendChild(uploadButton);
+
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Annuler';
+        closeButton.addEventListener('click', function () {
+            closePopup(overlay);
+        });
+        popup.appendChild(closeButton);
+
+        overlay.appendChild(popup);
+        document.body.appendChild(overlay);
+    }
+
+
 
     //CREATE FILE
     function createFile(parent) {

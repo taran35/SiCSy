@@ -17,9 +17,78 @@ if ($res_admins) {
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Liste des utilisateurs</title>
+    <link rel="stylesheet" href="base.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <header>
+        <div style="display:flex; justify-content: space-between; align-items:center;">
+            <button onclick="window.location.href='dash.php'" id="home" aria-label="retour a la page d'accueil" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🏠</button>
+            <div>Bienvenue, <?= htmlspecialchars($_SESSION['username']) ?> 👋</div>
+            <button id="theme-toggle" aria-label="Basculer le thème" style="
+            background:none; 
+            border:none; 
+            color:white; 
+            font-size:1.5rem; 
+            cursor:pointer;
+        ">🌙</button>
+        </div>
+    </header>
+
+    <h1>🧑‍💻Utilisateurs enregistrés🧑‍💻</h1>
+
+    <input type="text" id="search" placeholder="Rechercher un pseudo...">
+
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pseudo</th>
+                <th>Email</th>
+                <th>Date d’inscription</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td data-label="ID"><?= $row['id'] ?></td>
+                    <td data-label="Pseudo">
+                        <?= htmlspecialchars($row['pseudo']) ?>
+                        <?php if (in_array($row['mail'], $admin_mails)): ?>
+                            <span class="admin-badge">Admin</span>
+                        <?php endif; ?>
+                    </td>
+                    <td data-label="Email"><span class="mail-hidden"><?= htmlspecialchars($row['mail']) ?></span></td>
+                    <td data-label="Date d’inscription"><?= date('d/m/Y H:i', strtotime($row['created_at'])) ?></td>
+                </tr>
+
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <script>
+        const search = document.getElementById('search');
+        const rows = document.querySelectorAll('#userTable tbody tr');
+
+        search.addEventListener('input', function () {
+            const term = this.value.toLowerCase();
+            rows.forEach(row => {
+                const pseudo = row.children[1].textContent.toLowerCase();
+                row.style.display = pseudo.includes(term) ? '' : 'none';
+            });
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,10 +117,11 @@ if ($res_admins) {
             background-color: white;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
 
-        th, td {
+        th,
+        td {
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -80,78 +150,114 @@ if ($res_admins) {
             margin-left: 0.5rem;
         }
 
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1e1e1e;
-                color: #ddd;
-            }
 
-            table {
-                background-color: #2a2a2a;
-            }
 
-            th, td {
-                border-color: #444;
-            }
+        [data-theme="dark"] {
 
             tr:hover {
-                background-color: #333;
+                background-color: rgb(95, 92, 92);
             }
 
-            .mail-hidden:hover {
-                color: #4aa3ff;
+            th,
+            td {
+                padding: 12px 15px;
+                text-align: left;
+                border-bottom: 1px solid rgb(8, 7, 7);
+            }
+
+            table, tbody, tr {
+                background-color: rgb(62, 63, 65);
+            }
+
+            input[type=text] {
+                background-color: rgb(95, 92, 92);
+            }
+            td::before {
+                color: white;
+            }
+            
+
+        }
+
+        @media screen and (max-width: 768px) {
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+                width: 100%;
+            }
+
+            thead tr {
+                display: none;
+            }
+
+            tbody tr {
+                margin-bottom: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 1rem;
+                background-color: white;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            }
+
+            tbody td {
+                display: flex;
+                justify-content: space-between;
+                padding: 0.5rem 0;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            tbody td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: #555;
+                width: 50%;
+                display: inline-block;
             }
 
             .admin-badge {
-                background-color: #2ecc71;
+                margin-top: 0.5rem;
+                display: inline-block;
             }
         }
     </style>
-</head>
-<body>
-
-<h1>Utilisateurs enregistrés</h1>
-
-<input type="text" id="search" placeholder="Rechercher un pseudo...">
-
-<table id="userTable">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Pseudo</th>
-            <th>Email</th>
-            <th>Date d’inscription</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
-                <td><?= $row['id'] ?></td>
-                <td>
-                    <?= htmlspecialchars($row['pseudo']) ?>
-                    <?php if (in_array($row['mail'], $admin_mails)): ?>
-                        <span class="admin-badge">Admin</span>
-                    <?php endif; ?>
-                </td>
-                <td><span class="mail-hidden"><?= htmlspecialchars($row['mail']) ?></span></td>
-                <td><?= date('d/m/Y H:i', strtotime($row['created_at'])) ?></td>
-            </tr>
-        <?php endwhile; ?>
-    </tbody>
-</table>
-
+    <footer>
+        <p><a class="logout" href="logout.php">Se déconnecter</a></p>
+        <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
+    </footer>
+</body>
 <script>
-    const search = document.getElementById('search');
-    const rows = document.querySelectorAll('#userTable tbody tr');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
 
-    search.addEventListener('input', function() {
-        const term = this.value.toLowerCase();
-        rows.forEach(row => {
-            const pseudo = row.children[1].textContent.toLowerCase();
-            row.style.display = pseudo.includes(term) ? '' : 'none';
-        });
-    });
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        themeToggleBtn.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeToggleBtn.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+    }
+
+    function switchTheme() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            themeToggleBtn.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggleBtn.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    themeToggleBtn.addEventListener('click', switchTheme);
 </script>
 
-</body>
 </html>

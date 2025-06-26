@@ -9,7 +9,7 @@ require_once 'adm.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Création de compte</title>
+    <title>Suppression de compte</title>
     <link rel="stylesheet" href="base.css">
 </head>
 
@@ -36,32 +36,14 @@ require_once 'adm.php';
     <div class="container">
         <main>
             <div class="reg">
-                <h1>Ajouter un utilisateur</h1>
+                <h1>Supprimer un utilisateur</h1>
                 <hr>
                 <div class="form">
-                    <form id="registerform" novalidate>
-                        <div class="form-group">
-                            <input type="text" id="pseudo" placeholder="Pseudo" required />
-                            <div id="pseudoError" class="error-message"></div>
-                        </div>
-
+                    <form id="deleteform" novalidate>
                         <div class="form-group">
                             <input type="email" id="email" placeholder="Adresse email" required />
                             <div id="emailError" class="error-message"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="password" id="password" placeholder="Mot de passe" required minlength="8" />
-                            <div id="passwordError" class="error-message"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="password" id="password2" placeholder="Vérifier le mot de passe" required
-                                minlength="8" />
-                            <div id="password2Error" class="error-message"></div>
-                        </div>
-
-                        <input type="submit" value="Créer un compte" />
+                        <input type="submit" value="Supprimer un compte" />
                     </form>
                 </div>
             </div>
@@ -72,42 +54,25 @@ require_once 'adm.php';
         <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
     </footer>
     <script>
-        const form = document.getElementById("registerform");
+        const form = document.getElementById("deleteform");
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();
 
             let isValid = true;
 
-            const pseudo = document.getElementById("pseudo");
             const email = document.getElementById("email");
-            const password = document.getElementById("password");
-            const password2 = document.getElementById("password2");
 
             clearErrors();
 
-            if (pseudo.value.trim() === "") {
-                showError(pseudo, "pseudoError", "Le pseudo est requis.");
-                isValid = false;
-            }
 
             if (!validateEmail(email.value.trim())) {
                 showError(email, "emailError", "Adresse email invalide.");
                 isValid = false;
             }
 
-            if (password.value.length < 8) {
-                showError(password, "passwordError", "Le mot de passe doit contenir au moins 8 caractères.");
-                isValid = false;
-            }
-
-            if (password.value !== password2.value) {
-                showError(password2, "password2Error", "Les mots de passe ne correspondent pas.");
-                isValid = false;
-            }
-
             if (isValid) {
-                accountCreate(email.value.trim(), password.value.trim(), pseudo.value.trim());
+                accountDelete(email.value.trim());
             }
         });
 
@@ -129,24 +94,22 @@ require_once 'adm.php';
             return re.test(email);
         }
 
-        function accountCreate(mail, password, pseudo) {
-            fetch('account-create.php', {
+        function accountDelete(mail) {
+            fetch('account-delete.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
                 },
                 body: new URLSearchParams({
-                    'email': mail,
-                    'pass': password,
-                    'pseudo': pseudo
+                    'email': mail
                 })
             })
                 .then(response => response.text())
                 .then(response => {
                     if (response === 'success') {
-                        alert("Compte créé avec succès !");
-                        window.location.href = "./login.php";
+                        alert("Compte supprimé avec succès !");
+                        window.location.href = "dash.php";
                     } else {
                         alert("Erreur : " + response);
                     }
