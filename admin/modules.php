@@ -60,6 +60,7 @@ require_once 'adm.php';
 
                 if (json_last_error() === JSON_ERROR_NONE) {
                     $index = $data['index'];
+                    $index_name = $data['index_name'];
                     $param = $data['param'];
                     ?>
                     <form id="<?php echo $folder ?>Form">
@@ -74,7 +75,7 @@ require_once 'adm.php';
                         ?>
                         <div class="boutons">
                             <input type="submit" value="Envoyer"> <button id="index" name="index" class="index"
-                                onclick="window.location.href='<?php echo $index ?>'">Page du module</button>
+                                onclick="window.location.href='<?php echo $index ?>'"><?php echo $index_name ?></button>
                         </div>
                     </form>
                     <?php
