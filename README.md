@@ -1,10 +1,10 @@
 > ⚠️ Fonction de récupération de mot de passe non fonctionnelle / index.php non responsive pour l'instant
 
-# ☁️ Simple Cloud System — Gestion de fichiers en ligne avec PHP & MySQL
+# ☁️ SImple Cloud SYstem — Gestion de fichiers en ligne avec PHP & MySQL
 
 ## 📝 Description
 
-Ce projet est un système de cloud web simple utilisant **PHP** et une base de données **MySQL** pour stocker et gérer des fichiers. Il permet à des utilisateurs de **téléverser, consulter et organiser** leurs fichiers via une interface.
+SiCSy est un projet est un système de cloud web simple utilisant **PHP** et une base de données **MySQL** pour stocker et gérer des fichiers. Il permet à des utilisateurs de **téléverser, consulter et organiser** leurs fichiers via une interface.
 
 ---
 
