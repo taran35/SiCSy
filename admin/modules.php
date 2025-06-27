@@ -62,19 +62,31 @@ require_once 'adm.php';
                     $index = $data['index'];
                     $index_name = $data['index_name'];
                     $param = $data['param'];
+                    $status = $data['status'] ?? 'off';
                     ?>
                     <form id="<?php echo $folder ?>Form">
                         <input id="folder" name="folder" type="hidden" value="<?php echo $folder ?>" />
+
+                        <div class="form-field">
+                            <label for="status">Status:</label>
+                            <label class="switch">
+                                <input type="checkbox" id="status" name="param[status]" <?php echo ($status === 'on') ? 'checked' : '' ?>>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
                         <?php
                         foreach ($param as $key => $value) {
                             echo '<div class="form-field">';
                             echo '<label for="' . $key . '">' . ucfirst($key) . ':</label>';
-                            echo '<input type="text" id="' . $key . '" name="param[' . $key . ']" value="' . $value . '">';
+                            echo '<input type="text" id="' . $key . '" name="param[' . $key . ']" value="' . htmlspecialchars($value) . '">';
                             echo '</div>';
                         }
                         ?>
+
                         <div class="boutons">
-                            <input type="submit" value="Envoyer"> <button id="index" name="index" class="index"
+                            <input type="submit" value="Envoyer">
+                            <button id="index" name="index" class="index"
                                 onclick="window.location.href='<?php echo $index ?>'"><?php echo $index_name ?></button>
                         </div>
                     </form>
@@ -197,6 +209,53 @@ require_once 'adm.php';
         border-top: 1px solid #ccc;
     }
 
+    /* Switch toggle */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 28px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 28px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 22px;
+        width: 22px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    input:checked+.slider {
+        background-color: #007acc;
+    }
+
+    input:checked+.slider:before {
+        transform: translateX(22px);
+    }
+
+
     @media (max-width: 600px) {
         body {
             padding: 1rem;
@@ -260,8 +319,32 @@ require_once 'adm.php';
         event.preventDefault();
 
         const form = event.target;
-        const formData = new FormData(form);
 
+        const statusCheckbox = form.querySelector('input[name="param[status]"]');
+        if (statusCheckbox && !statusCheckbox.checked) {
+            let hiddenInputParam = form.querySelector('input[name="param[status]"][type="hidden"]');
+            if (hiddenInputParam) hiddenInputParam.remove();
+
+            let hiddenInput = form.querySelector('input[name="status"][type="hidden"]');
+            if (!hiddenInput) {
+                hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'status';
+                form.appendChild(hiddenInput);
+            }
+            hiddenInput.value = 'off';
+        } else if (statusCheckbox && statusCheckbox.checked) {
+            let hiddenInput = form.querySelector('input[name="status"][type="hidden"]');
+            if (!hiddenInput) {
+                hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'status';
+                form.appendChild(hiddenInput);
+            }
+            hiddenInput.value = 'on';
+        }
+
+        const formData = new FormData(form);
 
         fetch('updateModule.php', {
             method: 'POST',
@@ -274,8 +357,10 @@ require_once 'adm.php';
                 if (response == "success") {
                     alert("Paramètres modifiés avec succès");
                 } else {
-                    alert("Une erreur est survenu");
+                    alert("Une erreur est survenue : " + response);
                 }
             });
     });
+
+
 </script>
