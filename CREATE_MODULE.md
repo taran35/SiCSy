@@ -45,4 +45,4 @@
   - Le dossier du module complet
   - un README.md expliquant toutes les modifications à appliquer au code source du projet
     
-2. Créer une issue ayant comme titre le nom de votre module, en description un lien vers le repo du module et une description de son fonctionnement.
+2. Créer une issue ayant comme titre le nom de votre module, en description un lien vers le repo du module et une description de son fonctionnement. Indiquer aussi les différents fichiers modifiés et à quel endroit ils sont modifiés.
