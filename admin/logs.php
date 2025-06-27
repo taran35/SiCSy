@@ -414,7 +414,7 @@ require_once 'adm.php';
     }
 
     .type-updateFile {
-        background-color: rgb(201, 198, 32);
+        background-color: #c9c620;
     }
 
     .content-toggle {

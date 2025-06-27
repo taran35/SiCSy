@@ -85,7 +85,7 @@ require_once 'adm.php';
                         ?>
 
                         <div class="boutons">
-                            <input type="submit" value="Envoyer">
+                            <input type="submit" value="Sauvegarder">
                             <button id="index" name="index" class="index"
                                 onclick="window.location.href='<?php echo $index ?>'"><?php echo $index_name ?></button>
                         </div>
