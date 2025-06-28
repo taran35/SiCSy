@@ -1,4 +1,4 @@
-> ⚠️ Fonction de récupération de mot de passe non fonctionnelle / index.php non responsive pour l'instant
+> ⚠️ Fonction de récupération de mot de passe non fonctionnelle (enlever changepassword.html par sécurité)
 
 # ☁️ SImple Cloud SYstem — Gestion de fichiers en ligne avec PHP & MySQL
 

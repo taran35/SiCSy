@@ -216,7 +216,7 @@ $mysqli->close();
                 <a href="modules.php">Gérer les modules</a>
                 <a href="https://github.com/taran35/cloud/blob/main/modules.md">Voir les modules disponibles</a>
                 <hr style="width: 80%;">
-                <a href="themes.php">Gérer les themes</a>
+                <a href="theme.php">Gérer les themes</a>
                 <a href="https://github.com/taran35/cloud/blob/main/themes.md">Voir les themes disponibles</a>
             </div>
         </section>
