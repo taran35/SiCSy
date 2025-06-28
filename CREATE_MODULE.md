@@ -16,7 +16,7 @@
 {
     "status": "off", //Ne rien changer ici
     "index": "../index.php", //lien externe ou chemin vers un fichier de documentation, affichage ou autre
-    "index_name": "Documentation" //nom du bouton affiché sur la page modules.php
+    "index_name": "Documentation" //nom du bouton affiché sur la page modules.php (laisse vide pour ne pas mettre de bouton)
     "param": {
         "webhook_url": "https://discord.com/api/webhooks/....", //Les différents paramètres modifiables du module
         "webhook_name": "Mon super webhook"
@@ -24,7 +24,6 @@
 }
 ```
 3. Mettre les fichiers nécessaires au fonctionnement du module dans le dossier du module
-4. Modifier aux endroits nécessaires au fonctionnement du module le source code (rajouter un fetch...)
 
 > Résultat:
 ```text

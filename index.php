@@ -16,6 +16,12 @@ if (isset($_SESSION['parent'])) {
     $_SESSION['parent'] = '/';
 }
 
+$configPath = "./themes/config.json";
+$json = file_get_contents($configPath);
+$data = json_decode($json, true);
+$file = $data['theme_file'];
+$folder = $data['theme'];
+$theme = "./themes/" .  $folder . "/" . $file;
 
 ?>
 
@@ -25,7 +31,7 @@ if (isset($_SESSION['parent'])) {
 <head>
     <meta charset="UTF-8">
     <title>Page d'accueil</title>
-    <link rel="stylesheet" href="./main/cloud_styles.css">
+    <link rel="stylesheet" href="<?php echo $theme ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/monokai.min.css">

@@ -1,14 +1,17 @@
 <?php
 session_start();
 require_once 'adm.php';
-
+$configPath = "../themes/config.json";
+$json = file_get_contents($configPath);
+$data = json_decode($json, true);
+$theme_actuel = $data['theme'];
 ?>
 <html>
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paramètres des modules</title>
+    <title>Paramètres des themes</title>
     <link rel="stylesheet" href="base.css">
 </head>
 
@@ -33,89 +36,71 @@ require_once 'adm.php';
         </div>
     </header>
     <main>
-    <h1>⚙️Paramètres des modules⚙️</h1>
-    <?php
+        <div class="box1">
+            <h1>⚙️Paramètres des themes⚙️</h1>
+            <p> theme actuel : <strong><?php echo $theme_actuel ?></strong></p>
+        </div>
+        <?php
 
 
-    $basePath = '../modules/';
+        $basePath = '../themes/';
 
-    if (!is_dir($basePath)) {
-        die("Erreur : le dossier '$basePath' n'existe pas.");
-    }
+        if (!is_dir($basePath)) {
+            die("Erreur : le dossier '$basePath' n'existe pas.");
+        }
 
-    $folders = scandir($basePath);
-    foreach ($folders as $folder) {
-        if ($folder === '.' || $folder === '..')
-            continue;
+        $folders = scandir($basePath);
+        foreach ($folders as $folder) {
+            if ($folder === '.' || $folder === '..')
+                continue;
 
-        $folderPath = $basePath . $folder;
+            $folderPath = $basePath . $folder;
 
-        if (is_dir($folderPath)) {
-            $configPath = $folderPath . '/config.json';
+            if (is_dir($folderPath)) {
+                $configPath = $folderPath . '/config.json';
 
-            echo "<h3>Module : $folder</h3>";
+                echo "<h3>Theme : $folder</h3>";
 
-            if (file_exists($configPath)) {
-                $json = file_get_contents($configPath);
-                $data = json_decode($json, true);
-
-                if (json_last_error() === JSON_ERROR_NONE) {
+                if (file_exists($configPath)) {
+                    $json = file_get_contents($configPath);
+                    $data = json_decode($json, true);
                     $index = $data['index'];
                     $index_name = $data['index_name'];
-                    $param = $data['param'];
-                    $status = $data['status'] ?? 'off';
+                    $theme_descr = $data['theme_descr'];
+                    $theme_file = $data["css_file"];
                     ?>
-                    <form id="<?php echo $folder ?>Form">
-                        <input id="folder" name="folder" type="hidden" value="<?php echo $folder ?>" />
-
-                        <div class="form-field">
-                            <label for="status">Status:</label>
-                            <label class="switch">
-                                <input type="checkbox" id="status" name="param[status]" <?php echo ($status === 'on') ? 'checked' : '' ?>>
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-
-                        <?php
-                        foreach ($param as $key => $value) {
-                            echo '<div class="form-field">';
-                            echo '<label for="' . $key . '">' . ucfirst($key) . ':</label>';
-                            echo '<input type="text" id="' . $key . '" name="param[' . $key . ']" value="' . htmlspecialchars($value) . '">';
-                            echo '</div>';
-                        }
-                        ?>
-
-                        <div class="boutons">
-                            <input type="submit" value="Sauvegarder">
-                            <?php
+                    <div class="box">
+                        <p style="margin-right: 20%; margin-left: 20%; text-align: center;"> <?php echo $theme_descr ?></p>
+                        <form>
+                            <input id="theme" name="theme" type="hidden" value="<?php echo $folder ?>">
+                            <input id="file" name="file" type="hidden" value="<?php echo $theme_file ?>">
+                            <div class="boutons">
+                                <input type="submit" value="Choisir ce theme">
+                                <?php
                                 if ($index_name != "") {
                                     echo "<button id='index' name='index' class='index'
                                     onclick='window.location.href='" . $index . "'>" . $index_name . "</button>";
                                 }
                                 ?>
-                        </div>
-                    </form>
+                            </div>
+                        </form>
+                    </div>
                     <?php
-                } else {
-                    echo "Erreur : le fichier config.json n'est pas un JSON valide.<br>";
-                }
-            } else {
-                echo "Erreur : config.json est manquant dans $folder.<br>";
-            }
 
-            echo "<hr>";
+
+                } else {
+                    echo "<p>Le fichier de configuration $configPath n'existe pas.</p>";
+                    continue;
+                }
+            }
         }
-    }
-    ?>
+        ?>
     </main>
     <footer>
         <p><a class="logout" href="logout.php">Se déconnecter</a></p>
         <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
     </footer>
 </body>
-
-
-
 <style>
     main {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -138,6 +123,9 @@ require_once 'adm.php';
     form {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .box {
         gap: 20px;
         background: white;
         padding: 20px;
@@ -153,23 +141,13 @@ require_once 'adm.php';
         width: 100%;
     }
 
+    .box1 {
+        height: fit-content;
+    }
+
     label {
         font-weight: bold;
         margin-bottom: 5px;
-    }
-
-    input[type="text"] {
-        padding: 0.6rem;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        transition: border 0.3s;
-    }
-
-    input[type="text"]:focus {
-        border-color: #007acc;
-        outline: none;
     }
 
     .boutons {
@@ -216,53 +194,6 @@ require_once 'adm.php';
         border-top: 1px solid #ccc;
     }
 
-    /* Switch toggle */
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 50px;
-        height: 28px;
-    }
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: .4s;
-        border-radius: 28px;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 22px;
-        width: 22px;
-        left: 3px;
-        bottom: 3px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
-
-    input:checked+.slider {
-        background-color: #007acc;
-    }
-
-    input:checked+.slider:before {
-        transform: translateX(22px);
-    }
-
-
     @media (max-width: 600px) {
         body {
             padding: 1rem;
@@ -274,7 +205,7 @@ require_once 'adm.php';
     }
 
     [data-theme="dark"] {
-        form {
+        .box {
             background-color: rgb(62, 63, 65);
         }
 
@@ -285,17 +216,18 @@ require_once 'adm.php';
         hr {
             color: #rgb(34, 39, 49);
         }
+
         main {
             background-color: #1e1e1e;
         }
-        label, h1 {
+
+        label,
+        h1,
+        p {
             color: rgb(150, 152, 155);
         }
     }
 </style>
-
-
-
 
 </html>
 <script>
@@ -326,45 +258,23 @@ require_once 'adm.php';
 
     themeToggleBtn.addEventListener('click', switchTheme);
 </script>
-
 <script>
     document.addEventListener('submit', function (event) {
         event.preventDefault();
 
         const form = event.target;
+        const themeInput = form.querySelector('#theme');
+        const fileInput = form.querySelector('#file');
 
-        const statusCheckbox = form.querySelector('input[name="param[status]"]');
-        if (statusCheckbox && !statusCheckbox.checked) {
-            let hiddenInputParam = form.querySelector('input[name="param[status]"][type="hidden"]');
-            if (hiddenInputParam) hiddenInputParam.remove();
-
-            let hiddenInput = form.querySelector('input[name="status"][type="hidden"]');
-            if (!hiddenInput) {
-                hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'status';
-                form.appendChild(hiddenInput);
-            }
-            hiddenInput.value = 'off';
-        } else if (statusCheckbox && statusCheckbox.checked) {
-            let hiddenInput = form.querySelector('input[name="status"][type="hidden"]');
-            if (!hiddenInput) {
-                hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'status';
-                form.appendChild(hiddenInput);
-            }
-            hiddenInput.value = 'on';
-        }
-
-        const formData = new FormData(form);
-
-        fetch('updateModule.php', {
+        fetch('updateTheme.php', {
             method: 'POST',
-            body: formData,
             headers: {
                 'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
             },
+            body: new URLSearchParams({
+                'theme': themeInput.value,
+                'file': fileInput.value
+            })
         }).then(response => response.text())
             .then(response => {
                 if (response == "success") {
@@ -373,7 +283,7 @@ require_once 'adm.php';
                     alert("Une erreur est survenue : " + response);
                 }
             });
+
+
     });
-
-
 </script>

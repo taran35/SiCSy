@@ -146,7 +146,7 @@ require_once 'adm.php';
                 .then(response => {
                     if (response === 'success') {
                         alert("Compte créé avec succès !");
-                        window.location.href = "./login.php";
+                        window.location.href = "./dash.php";
                     } else {
                         alert("Erreur : " + response);
                     }
