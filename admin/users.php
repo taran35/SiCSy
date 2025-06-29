@@ -13,6 +13,22 @@ if ($res_admins) {
         $admin_mails[] = $row['mail'];
     }
 }
+$configPath = "../themes-admin/config.json";
+$json = file_get_contents($configPath);
+$data = json_decode($json, true);
+$fenetre = basename(__FILE__);
+$folder = $data['theme'];
+
+$configPath2 = "../themes-admin/" . $folder . "/config.json";
+$json2 = file_get_contents($configPath2);
+$data2 = json_decode($json2, true);
+$file = $data2[$fenetre];
+$basePath = $data2['base'];
+$theme = "../themes-admin/" . $folder . "/" . $file;
+$base = "../themes-admin/" . $folder . "/" . $basePath;
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -21,8 +37,9 @@ if ($res_admins) {
 <head>
     <meta charset="UTF-8">
     <title>Liste des utilisateurs</title>
-    <link rel="stylesheet" href="base.css">
+    <link rel='stylesheet' href='<?php echo $base ?>'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='<?php echo $theme ?>'>
 </head>
 
 <body>
@@ -89,143 +106,7 @@ if ($res_admins) {
             });
         });
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f8f9fa;
-            color: #333;
-            padding: 2rem;
-        }
 
-        h1 {
-            text-align: center;
-        }
-
-        input[type="text"] {
-            display: block;
-            margin: 1rem auto 2rem auto;
-            padding: 0.5rem 1rem;
-            width: 50%;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-        }
-
-        th,
-        td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .mail-hidden {
-            color: transparent;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        .mail-hidden:hover {
-            color: #007bff;
-        }
-
-        .admin-badge {
-            background-color: #28a745;
-            color: white;
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
-
-
-
-        [data-theme="dark"] {
-
-            tr:hover {
-                background-color: rgb(95, 92, 92);
-            }
-
-            th,
-            td {
-                padding: 12px 15px;
-                text-align: left;
-                border-bottom: 1px solid rgb(8, 7, 7);
-            }
-
-            table, tbody, tr {
-                background-color: rgb(62, 63, 65);
-            }
-
-            input[type=text] {
-                background-color: rgb(95, 92, 92);
-            }
-            td::before {
-                color: white;
-            }
-            
-
-        }
-
-        @media screen and (max-width: 768px) {
-
-            table,
-            thead,
-            tbody,
-            th,
-            td,
-            tr {
-                display: block;
-                width: 100%;
-            }
-
-            thead tr {
-                display: none;
-            }
-
-            tbody tr {
-                margin-bottom: 1rem;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                padding: 1rem;
-                background-color: white;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            }
-
-            tbody td {
-                display: flex;
-                justify-content: space-between;
-                padding: 0.5rem 0;
-                border: none;
-                border-bottom: 1px solid #eee;
-            }
-
-            tbody td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #555;
-                width: 50%;
-                display: inline-block;
-            }
-
-            .admin-badge {
-                margin-top: 0.5rem;
-                display: inline-block;
-            }
-        }
-    </style>
     <footer>
         <p><a class="logout" href="logout.php">Se déconnecter</a></p>
         <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>

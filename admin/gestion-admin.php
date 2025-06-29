@@ -25,6 +25,24 @@ if ($result) {
         $stmt->close();
     }
 }
+
+
+$configPath = "../themes-admin/config.json";
+$json = file_get_contents($configPath);
+$data = json_decode($json, true);
+$fenetre = basename(__FILE__);
+$folder = $data['theme'];
+
+$configPath2 = "../themes-admin/" . $folder . "/config.json";
+$json2 = file_get_contents($configPath2);
+$data2 = json_decode($json2, true);
+$file = $data2[$fenetre];
+$basePath = $data2['base'];
+$theme = "../themes-admin/" . $folder . "/" . $file;
+$base = "../themes-admin/" . $folder . "/" . $basePath;
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -32,9 +50,10 @@ if ($result) {
 
 <head>
     <meta charset="UTF-8">
+    <link rel='stylesheet' href='<?php echo $theme ?>'>
     <title>Gestion des administrateurs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="base.css">
+    <link rel='stylesheet' href='<?php echo $base ?>'>
 </head>
 <body>
         <header>
@@ -88,148 +107,6 @@ if ($result) {
         <p><a class="logout" href="logout.php">Se déconnecter</a></p>
         <p class="credits"><a class="credits2" href="https://github.com/taran35/cloud">Copyright © 2025 Taran35</a></p>
     </footer>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 2rem;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-        }
-
-        th,
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid #ccc;
-            text-align: left;
-        }
-
-        tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .remove-btn {
-            padding: 0.3rem 0.6rem;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .remove-btn:hover {
-            background-color: #c82333;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1e1e1e;
-                color: #eee;
-            }
-
-            table {
-                background-color: #2a2a2a;
-            }
-
-            th,
-            td {
-                border-color: #444;
-            }
-
-            tr:hover {
-                background-color: #333;
-            }
-
-            .remove-btn {
-                background-color: #ff4f5e;
-            }
-
-            .remove-btn:hover {
-                background-color: #d03a46;
-            }
-        }
-                [data-theme="dark"] {
-
-            tr:hover {
-                background-color: rgb(95, 92, 92);
-            }
-
-            th,
-            td {
-                padding: 12px 15px;
-                text-align: left;
-                border-bottom: 1px solid rgb(8, 7, 7);
-            }
-            table {
-                background-color: rgb(62, 63, 65);
-            }
-            td::before {
-                color: white;
-            }
-            tbody tr {
-                background-color: rgb(62, 63, 65);
-            }
-        }
-        @media screen and (max-width: 768px) {
-
-            table,
-            thead,
-            tbody,
-            th,
-            td,
-            tr {
-                display: block;
-                width: 100%;
-            }
-
-            thead tr {
-                display: none;
-            }
-
-            tbody tr {
-                margin-bottom: 1rem;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                padding: 1rem;
-                background-color: white;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            }
-
-            tbody td {
-                display: flex;
-                justify-content: space-between;
-                padding: 0.5rem 0;
-                border: none;
-                border-bottom: 1px solid #eee;
-            }
-
-            tbody td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #555;
-                width: 50%;
-                display: inline-block;
-            }
-
-            .admin-badge {
-                margin-top: 0.5rem;
-                display: inline-block;
-            }
-        }
-    </style>
 </body>
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');

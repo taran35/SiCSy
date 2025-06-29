@@ -1,0 +1,19 @@
+{
+    "theme": "Default",
+    "index": "#",
+    "index_name": "",
+    "theme_descr": "Le thème par défaut du panel administrateur de SiCSy :)",
+
+
+    "base": "base.css",
+    "dash.php": "dash.css",
+    "add-admin.php": "add-admin.css",
+    "delete-user.php": "delete-user.css",
+    "gestion-admin.php": "gestion-admin.css",
+    "logs.php": "logs.css",
+    "modules.php": "modules.css",
+    "register.php": "register.css",
+    "theme.php": "theme.css",
+    "theme-admin.php": "theme.css",
+    "users.php": "users.css"
+}

@@ -3,6 +3,23 @@ session_start();
 require_once 'adm.php';
 require_once '../account/bdd.php';
 
+
+$configPath = "../themes-admin/config.json";
+$json = file_get_contents($configPath);
+$data = json_decode($json, true);
+$fenetre = basename(__FILE__);
+$folder = $data['theme'];
+
+$configPath2 = "../themes-admin/" . $folder . "/config.json";
+$json2 = file_get_contents($configPath2);
+$data2 = json_decode($json2, true);
+$file = $data2[$fenetre];
+$basePath = $data2['base'];
+$theme = "../themes-admin/" . $folder . "/" . $file;
+$base = "../themes-admin/" . $folder . "/" . $basePath;
+
+
+
 $res_files= $mysqli->query("SELECT COUNT(*) AS total FROM files WHERE type='files'");
 $total_files = ($res_files && $row = $res_files->fetch_assoc()) ? $row['total'] : 0;
 
@@ -45,135 +62,11 @@ $mysqli->close();
 <head>
     <meta charset="UTF-8" />
     <title>Tableau de bord admin</title>
+    <link rel='stylesheet' href='<?php echo $theme ?>'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="base.css">
-    <style>
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            gap: 2rem;
-            align-items: start;
-            min-height: 60vh;
-        }
-
-        .stats-box {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .stats-card {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            font-weight: 600;
-            font-size: 1.3rem;
-            color: #007bff;
-        }
-
-        .stats-card .icon {
-            font-size: 2.8rem;
-            line-height: 1;
-        }
-
-        .stats-card span.value {
-            font-size: 2rem;
-            color: #222;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .button-group a {
-            padding: 1rem 1.5rem;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 123, 255, 0.4);
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .button-group a:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(0, 86, 179, 0.7);
-        }
-
-        .chart-container {
-            background: white;
-            padding: 1.5rem 2rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.15);
-        }
-
-        .chart-container h2 {
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-            font-size: 1.6rem;
-            color: #0056b3;
-            text-align: center;
-        }
-
-        canvas {
-            max-width: 100%;
-            border-radius: 12px;
-        }
-
-
-
-        [data-theme="dark"] {
-
-
-            .stats-box,
-            .chart-container {
-                background-color: #2a2a2a;
-                color: #ddd;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            }
-
-            .stats-card {
-                color: #3399ff;
-            }
-
-            .stats-card span.value {
-                color: #eee;
-            }
-
-            .button-group a {
-                background-color: #0d6efd;
-                box-shadow: 0 2px 6px rgba(13, 110, 253, 0.6);
-            }
-
-            .button-group a:hover {
-                background-color: #084ecc;
-                box-shadow: 0 6px 18px rgba(8, 78, 204, 0.9);
-            }
-
-
-        }
-
-        @media (max-width: 900px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-        }
-    </style>
+    <link rel='stylesheet' href='<?php echo $base ?>'>
 </head>
 
 <body>
@@ -214,10 +107,10 @@ $mysqli->close();
                 <a href="logs.php">Voir les logs</a>
                 <hr style="width: 80%;">
                 <a href="modules.php">Gérer les modules</a>
-                <a href="https://github.com/taran35/cloud/blob/main/modules.md">Voir les modules disponibles</a>
+                <a href="https://taran35.github.io/SiCSy-website/wiki.html?page=modules">Voir les modules disponibles</a>
                 <hr style="width: 80%;">
                 <a href="theme.php">Gérer les themes</a>
-                <a href="https://github.com/taran35/cloud/blob/main/themes.md">Voir les themes disponibles</a>
+                <a href="https://taran35.github.io/SiCSy-website/wiki.html?page=themes">Voir les themes disponibles</a>
             </div>
         </section>
 
@@ -236,6 +129,9 @@ $mysqli->close();
                 <a href="register.php">Ajouter un utilisateur</a>
                 <a href="users.php">Voir les utilisateurs</a>
                 <a href="delete-user.php">Retirer un utilisateur</a>
+                <hr style="width: 80%;">
+                <a href="theme-admin.php">Gérer les themes admin</a>
+                <a href="https://taran35.github.io/SiCSy-website/wiki.html?page=themes-admin">Voir les themes du panel administrateur disponibles</a>
             </div>
         </section>
     </div>

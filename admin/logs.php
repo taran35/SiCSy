@@ -2,6 +2,22 @@
 session_start();
 require_once '../account/bdd.php';
 require_once 'adm.php';
+$configPath = "../themes-admin/config.json";
+$json = file_get_contents($configPath);
+$data = json_decode($json, true);
+$fenetre = basename(__FILE__);
+$folder = $data['theme'];
+
+$configPath2 = "../themes-admin/" . $folder . "/config.json";
+$json2 = file_get_contents($configPath2);
+$data2 = json_decode($json2, true);
+$file = $data2[$fenetre];
+$basePath = $data2['base'];
+$theme = "../themes-admin/" . $folder . "/" . $file;
+$base = "../themes-admin/" . $folder . "/" . $basePath;
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -9,9 +25,10 @@ require_once 'adm.php';
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='<?php echo $theme ?>'>
     <title>Visualisation des logs</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="base.css">
+    <link rel='stylesheet' href='<?php echo $base ?>'>
 </head>
 
 <body>
@@ -273,306 +290,3 @@ require_once 'adm.php';
 </script>
 
 </html>
-
-
-
-
-
-
-
-<style>
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        font-family: "Segoe UI", sans-serif;
-        background-color: #f0f2f5;
-        color: #333;
-        padding: 20px;
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 28px;
-        color: #222;
-    }
-
-    form {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-        align-items: end;
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
-    }
-
-    form label {
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 200px;
-        font-weight: bold;
-        color: #444;
-    }
-
-    form input[type="text"],
-    form input[type="date"],
-    form select {
-        padding: 8px;
-        margin-top: 5px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-    }
-
-    input[type="submit"] {
-        padding: 12px 20px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-top: 24px;
-        font-weight: bold;
-    }
-
-    input[type="submit"]:hover {
-        background-color: #218838;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    th,
-    td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #eaeaea;
-    }
-
-    th {
-        background-color: #f8f9fa;
-        color: #555;
-    }
-
-    tr:hover {
-        background-color: #f1f1f1;
-    }
-
-    .type-badge {
-        font-weight: bold;
-        padding: 4px 8px;
-        border-radius: 6px;
-        display: inline-block;
-        font-size: 13px;
-        color: white;
-    }
-
-    .type-deleteFile {
-        background-color: #dc3545;
-    }
-
-    .type-createFile {
-        background-color: #17a2b8;
-    }
-
-    .type-uploadFile {
-        background-color: #007bff;
-    }
-
-    .type-downloadFile {
-        background-color: #6f42c1;
-    }
-
-    .type-createFolder {
-        background-color: #28a745;
-    }
-
-    .type-deleteFolder {
-        background-color: #e83e8c;
-    }
-
-    .type-moveFile {
-        background-color: #fd7e14;
-    }
-
-    .type-renameFile {
-        background-color: #20c997;
-    }
-
-    .type-updateFile {
-        background-color: #c9c620;
-    }
-
-    .content-toggle {
-        cursor: pointer;
-        color: #007bff;
-        text-decoration: underline;
-    }
-
-    .content-box {
-        display: none;
-        white-space: pre-wrap;
-        background: #f8f9fa;
-        padding: 10px;
-        border-radius: 8px;
-        margin-top: 6px;
-        font-size: 14px;
-    }
-
-    .pagination {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .pagination a {
-        margin: 0 5px;
-        text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
-    }
-
-    [data-theme="dark"] {
-        table {
-            background-color: rgb(61, 61, 61);
-        }
-
-        th,
-        td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgb(8, 7, 7);
-        }
-
-        td::before {
-            color: white;
-        }
-
-        th, tr {
-            background-color: rgb(62, 63, 65);
-            color: rgb(194, 200, 201);
-        }
-
-        tr:hover {
-            background-color: rgb(95, 92, 92);
-        }
-
-        form {
-            background-color: rgb(61, 61, 61);
-        }
-
-        form input,
-        form select {
-            background-color: rgb(142, 150, 158);
-        }
-
-        form label {
-            color: white;
-        }
-
-        h1 {
-            color: rgb(225, 228, 231);
-        }
-
-        input[type="submit"] {
-            background-color: rgb(40, 163, 67);
-        }
-
-        input[type="submit"]:hover {
-            background-color: rgb(36, 131, 57);
-        }
-
-
-
-    }
-
-    @media (max-width: 768px) {
-        form {
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        form label {
-            width: 100%;
-        }
-
-        input[type="submit"] {
-            width: 100%;
-        }
-
-        header>div {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .pagination {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        table,
-        thead,
-        tbody,
-        th,
-        td,
-        tr {
-            display: block;
-        }
-
-        thead {
-            display: none;
-        }
-
-        tr {
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background: #fff;
-            padding: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        td {
-            padding: 8px;
-            text-align: left;
-            position: relative;
-            border: none;
-            border-bottom: 1px solid #eee;
-        }
-
-        td::before {
-            content: attr(data-label);
-            font-weight: bold;
-            display: block;
-            color: #555;
-            margin-bottom: 5px;
-        }
-
-        td:last-child {
-            border-bottom: none;
-        }
-
-        .content-box {
-            white-space: normal;
-        }
-
-        thead {
-            display: none;
-        }
-    }
-</style>

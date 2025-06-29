@@ -1,0 +1,125 @@
+main {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9fb;
+    color: #333;
+    margin: 0;
+    padding: 2rem;
+    text-align: center;
+    display: grid;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h3 {
+    color: #007acc;
+    margin-top: 2rem;
+    border-bottom: 2px solid #007acc;
+    padding-bottom: 0.3rem;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.box {
+    gap: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 100%;
+}
+
+.box1 {
+    height: fit-content;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.boutons {
+    grid-column: 1 / -1;
+}
+
+input[type="submit"] {
+    justify-self: center;
+    margin-top: 1rem;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.index {
+    justify-self: center;
+    margin-top: 1rem;
+    background-color: rgb(14, 129, 66);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #005f99;
+}
+
+.index:hover {
+    background-color: rgb(15, 126, 196);
+}
+
+hr {
+    margin: 3rem 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    form {
+        padding: 1rem;
+    }
+}
+
+[data-theme="dark"] {
+    .box {
+        background-color: rgb(62, 63, 65);
+    }
+
+    input[type=text] {
+        background-color: rgb(150, 152, 155);
+    }
+
+    hr {
+        color: rgb(34, 39, 49);
+    }
+
+    main {
+        background-color: #1e1e1e;
+    }
+
+    label,
+    h1,
+    p {
+        color: rgb(150, 152, 155);
+    }
+}

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'adm.php';
-$configPath = "../themes/config.json";
+$configPath = "../themes-admin/config.json";
 $json = file_get_contents($configPath);
 $data = json_decode($json, true);
 $theme_actuel = $data['theme'];
@@ -29,7 +29,7 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='<?php echo $theme ?>'>
-    <title>Paramètres des themes</title>
+    <title>Paramètres des themes administrateurs</title>
     <link rel='stylesheet' href='<?php echo $base ?>'>
 </head>
 
@@ -55,13 +55,13 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
     </header>
     <main>
         <div class="box1">
-            <h1>⚙️Paramètres des themes⚙️</h1>
+            <h1>⚙️Paramètres des themes administrateurs⚙️</h1>
             <p> theme actuel : <strong><?php echo $theme_actuel ?></strong></p>
         </div>
         <?php
 
 
-        $basePath = '../themes/';
+        $basePath = '../themes-admin/';
 
         if (!is_dir($basePath)) {
             die("Erreur : le dossier '$basePath' n'existe pas.");
@@ -85,13 +85,12 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
                     $index = $data['index'];
                     $index_name = $data['index_name'];
                     $theme_descr = $data['theme_descr'];
-                    $theme_file = $data["css_file"];
                     ?>
                     <div class="box">
                         <p style="margin-right: 20%; margin-left: 20%; text-align: center;"> <?php echo $theme_descr ?></p>
                         <form>
                             <input id="theme" name="theme" type="hidden" value="<?php echo $folder ?>">
-                            <input id="file" name="file" type="hidden" value="<?php echo $theme_file ?>">
+                            
                             <div class="boutons">
                                 <input type="submit" value="Choisir ce theme">
                                 <?php
@@ -158,7 +157,7 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
         const themeInput = form.querySelector('#theme');
         const fileInput = form.querySelector('#file');
 
-        fetch('updateTheme.php', {
+        fetch('updateThemeAdmin.php', {
             method: 'POST',
             headers: {
                 'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'

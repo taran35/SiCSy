@@ -1,6 +1,23 @@
 <?php
 session_start();
 require_once 'adm.php';
+
+$configPath = "../themes-admin/config.json";
+$json = file_get_contents($configPath);
+$data = json_decode($json, true);
+$fenetre = basename(__FILE__);
+$folder = $data['theme'];
+
+$configPath2 = "../themes-admin/" . $folder ."/config.json";
+$json2 = file_get_contents($configPath2);
+$data2 = json_decode($json2, true);
+$file = $data2[$fenetre];
+$basePath = $data2['base'];
+$theme = "../themes-admin/" . $folder . "/" . $file;
+$base = "../themes-admin/" . $folder . "/" . $basePath;
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -8,9 +25,10 @@ require_once 'adm.php';
 
 <head>
     <meta charset="UTF-8">
+    <link rel='stylesheet' href='<?php echo $theme ?>'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un administrateur</title>
-    <link rel="stylesheet" href="base.css">
+    <link rel='stylesheet' href='<?php echo $base ?>'>
 </head>
 
 <body>
@@ -87,150 +105,6 @@ require_once 'adm.php';
 </body>
 
 </html>
-
-<style>
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        background: #f5f7fa;
-        align-items: center;
-        min-height: 100vh;
-        font-family: 'Segoe UI', sans-serif;
-        color: #333;
-        padding: 1rem;
-    }
-
-    main {
-        width: 100%;
-        max-width: 450px;
-    }
-
-    .container {
-        display: flex;
-        justify-content: center;
-    }
-
-    .log {
-        background-color: #fff;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        width: 100%;
-        text-align: center;
-    }
-
-    .reg h1 {
-        margin-bottom: 20px;
-        font-size: 26px;
-    }
-
-    .reg hr {
-        border: none;
-        border-top: 1.5px solid #e0e0e0;
-        margin-bottom: 30px;
-    }
-
-    .form {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 14px;
-        width: 100%;
-    }
-
-    .form input[type="email"] {
-        padding: 12px 16px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 14px;
-        background-color: #f9f9f9;
-        transition: border-color 0.3s;
-        width: 100%;
-    }
-
-    .form input:focus {
-        border-color: #4285f4;
-        outline: none;
-        background-color: #fff;
-    }
-
-    .form input.error {
-        border-color: #e74c3c;
-        background-color: #ffe9e9;
-    }
-
-    .error-message {
-        font-size: 13px;
-        color: red;
-        margin-top: 4px;
-        margin-bottom: 6px;
-        text-align: left;
-    }
-
-    input[type="submit"] {
-        padding: 12px 16px;
-        background-color: #4285f4;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 15px;
-        transition: background-color 0.3s;
-        width: 100%;
-    }
-
-    input[type="submit"]:hover {
-        background-color: #2c6fe2;
-    }
-
-    .login {
-        margin-top: 20px;
-        font-size: 14px;
-    }
-
-    .login a {
-        color: #4285f4;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .login a:hover {
-        text-decoration: underline;
-    }
-
-    @media (max-width: 480px) {
-        .reg {
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .reg h1 {
-            font-size: 22px;
-        }
-    }
-
-    [data-theme="dark"] {
-
-        .form,
-        .log {
-            background-color: rgb(62, 63, 65);
-        }
-
-        input[type=email] {
-            background-color: rgb(142, 150, 158);
-        }
-    }
-</style>
 
 
 
