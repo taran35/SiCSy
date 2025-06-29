@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $theme = $_POST['theme'] ?? null;
-if (!$theme || !$file) {
+if (!$theme) {
     echo "Aucun theme spécifié.";
     exit;
 }

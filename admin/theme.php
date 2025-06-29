@@ -171,6 +171,7 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
             .then(response => {
                 if (response == "success") {
                     alert("Paramètres modifiés avec succès");
+                    location.reload();
                 } else {
                     alert("Une erreur est survenue : " + response);
                 }

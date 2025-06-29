@@ -6,11 +6,11 @@ $json = file_get_contents($configPath);
 $data = json_decode($json, true);
 $theme_actuel = $data['theme'];
 
-$configPath = "../themes-admin/config.json";
-$json = file_get_contents($configPath);
-$data = json_decode($json, true);
+$configPath3 = "../themes-admin/config.json";
+$json3 = file_get_contents($configPath3);
+$data3 = json_decode($json3, true);
 $fenetre = basename(__FILE__);
-$folder = $data['theme'];
+$folder = $data3['theme'];
 
 $configPath2 = "../themes-admin/" . $folder . "/config.json";
 $json2 = file_get_contents($configPath2);
@@ -163,13 +163,13 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
                 'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
             },
             body: new URLSearchParams({
-                'theme': themeInput.value,
-                'file': fileInput.value
+                'theme': themeInput.value
             })
         }).then(response => response.text())
             .then(response => {
                 if (response == "success") {
                     alert("Paramètres modifiés avec succès");
+                    location.reload();
                 } else {
                     alert("Une erreur est survenue : " + response);
                 }
