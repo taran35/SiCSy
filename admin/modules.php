@@ -89,9 +89,9 @@ require_once 'adm.php';
                             <input type="submit" value="Sauvegarder">
                             <?php
                                 if ($index_name != "") {
-                                    echo "<button id='index' name='index' class='index'
-                                    onclick='window.location.href='" . $index . "'>" . $index_name . "</button>";
-                                }
+                                echo '<button type="button" id="index" name="index" class="index" onclick="window.location.href=\'' . $index . '\'">' . $index_name . '</button>';
+
+                            }
                                 ?>
                         </div>
                     </form>

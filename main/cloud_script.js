@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = await response.text();
             globalParentPath = data;
         } catch {
-            alert('Erreur lors de la récupération du chemin des fichiers')
+            showAlert('Erreur lors de la récupération du chemin des fichiers')
         }
     }
 
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         } catch {
-            alert('Erreur lors du changement du chemin des fichiers')
+            showAlert('Erreur lors du changement du chemin des fichiers')
         }
     }
     async function sessionBack() {
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         } catch {
-            alert('Erreur lors du changement du chemin des fichiers')
+            showAlert('Erreur lors du changement du chemin des fichiers')
         }
     }
 
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(data => {
 
                 if (data.error) {
-                    alert("erreur lors de la récuperation des fichiers");
+                    showAlert("erreur lors de la récuperation des fichiers");
                     return;
                 }
 
@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             })
             .catch(error => {
-                alert('Erreur lors de la récupération des fichiers')
+                showAlert('Erreur lors de la récupération des fichiers')
             });
         //launch update buttons
         removeButtons('button');
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             fileList.appendChild(createFolderButton);
         } catch {
-            alert('Erreur lors de l\'implémentation des boutons de gestion')
+            showAlert('Erreur lors de l\'implémentation des boutons de gestion')
         }
     }
 
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 boutons[0].remove();
             }
         } catch {
-            alert('Erreur lors de la mise à jour des boutons')
+            showAlert('Erreur lors de la mise à jour des boutons')
         }
     }
     //UPDATE div files
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 files[0].remove();
             }
         } catch {
-            alert('Erreur lors de la mise à jour des fichiers')
+            showAlert('Erreur lors de la mise à jour des fichiers')
         }
     }
 
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.appendChild(popup);
             document.body.appendChild(overlay);
         } catch {
-            alert('Erreur lors de l\'ouverture du menu de gestion du fichier')
+            showAlert('Erreur lors de l\'ouverture du menu de gestion du fichier')
         }
     }
 
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
             confirmationOverlay.appendChild(confirmationPopup);
             document.body.appendChild(confirmationOverlay);
         } catch {
-            alert('Erreur lors de l\'ouverture de la fenêtre de suppression du fichier')
+            showAlert('Erreur lors de l\'ouverture de la fenêtre de suppression du fichier')
         }
     }
 
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             document.body.removeChild(overlay);
         } catch {
-            alert('Erreur lors de la fermeture de la popup')
+            showAlert('Erreur lors de la fermeture de la popup')
         }
     }
 
@@ -354,10 +354,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 headers: {
                     'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
                 }
-            })// -test -> debug sans mysqli
+            })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Erreur lors du chargement du fichier.');
+                        showAlert('Erreur lors du chargement du fichier.');
                     }
                     return response.text();
                 })
@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     editorContainer.appendChild(saveButton);
                 })
                 .catch(error => {
-                    alert('Erreur lors de la récupération du contenu du fichier');
+                    showAlert('Erreur lors de la récupération du contenu du fichier');
                     closePopup(overlay);
                 });
 
@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.appendChild(editorContainer);
             document.body.appendChild(overlay);
         } catch {
-            alert('Erreur lors de l\'ouverture de la popup d\'édition du fichier')
+            showAlert('Erreur lors de l\'ouverture de la popup d\'édition du fichier')
         }
     }
 
@@ -416,14 +416,14 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => {
                     if (response == "error") {
-                        alert('Erreur lors de la modification du fichier.');
+                        showAlert('Erreur lors de la modification du fichier.');
                     } else {
-                        alert('contenu modifié');
+                        showAlert('contenu modifié');
                         logs('updateFile', parent, name, Pcontent);
                     }
                 })
         } else {
-            alert('contenu trop long (+10000 caractères)');
+            showAlert('contenu trop long (+10000 caractères)');
         }
     }
 
@@ -461,9 +461,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (response == 'success') {
                             logs('renameFile', parent, fileName, name);
                             getFiles(parent);
+                            showAlert('Contenu modifié')
 
                         } else {
-                            alert('Erreur lors de la modification du fichier')
+                            showAlert('Erreur lors de la modification du fichier')
                         }
                     })
 
@@ -480,7 +481,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.appendChild(popup);
             document.body.appendChild(overlay);
         } catch {
-            alert('Erreur lors de la modification du fichier')
+            showAlert('Erreur lors de la modification du fichier')
         }
     }
 
@@ -520,15 +521,16 @@ document.addEventListener("DOMContentLoaded", function () {
                             logs('uploadFile', directory, file.name, 'null');
                             getFiles(directory);
                             closePopup(overlay);
+                            showAlert('Fichier upload avec succès');
 
                         } else {
-                            alert('Erreur lors de l\'upload du fichier :' + response);
+                            showAlert('Erreur lors de l\'upload du fichier :' + response);
                         }
                     }).catch(error => {
-                        alert('Erreur lors de l\'upload du fichier ');
+                        showAlert('Erreur lors de l\'upload du fichier ');
                     });
             } else {
-                alert('Veuillez sélectionner un fichier.');
+                showAlert('Veuillez sélectionner un fichier.');
             }
         });
         popup.appendChild(uploadButton);
@@ -581,9 +583,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             logs('createFile', parent, fileName, 'null');
                             openTextEditor(fileName, parent);
                             getFiles(parent);
-
+                            showAlert('Fichier créé avec succès')
                         } else {
-                            alert('Erreur lors de la création du fichier')
+                            showAlert('Erreur lors de la création du fichier')
                         }
                     })
 
@@ -600,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.appendChild(popup);
             document.body.appendChild(overlay);
         } catch {
-            alert('Erreur lors de la création du fichier')
+            showAlert('Erreur lors de la création du fichier')
         }
     }
     //DOWNLOAD FILE
@@ -615,7 +617,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => {
                     if (!response.ok) {
-                        alert('Erreur lors de la récupération du contenu du fichier')
+                        showAlert('Erreur lors de la récupération du contenu du fichier')
                     }
                     return response.text();
                 })
@@ -633,7 +635,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     logs('downloadFile', parent, name, 'null');
                 });
         } catch {
-            alert('Erreur lors de la préparation du téléchargement du fichier')
+            showAlert('Erreur lors de la préparation du téléchargement du fichier')
         }
     }
 
@@ -652,12 +654,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (response == 'success') {
                         logs('deleteFile', parent, name, 'null');
                         getFiles(parent);
+                        showAlert('Fichier supprimé avec succès')
                     } else {
-                        alert('Erreur lors de la suppression du fichier')
+                        showAlert('Erreur lors de la suppression du fichier')
                     }
                 })
         } catch {
-            alert('Erreur lors de la suppression du fichier')
+            showAlert('Erreur lors de la suppression du fichier')
         }
     }
 
@@ -696,10 +699,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (response == 'success') {
                             logs('createFolder', parent, folderName, 'null');
                             getFiles(parent);
+                            showAlert('Dossier créé avec succès')
                         } else if (response == 'folder_already_exist') {
-                            alert('Un dossier avec ce nom existe déjà à cet endroit')
+                            showAlert('Un dossier avec ce nom existe déjà à cet endroit')
                         } else {
-                            alert('Erreur lors de la création du dossier')
+                            showAlert('Erreur lors de la création du dossier')
                         }
                     })
             });
@@ -715,7 +719,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.appendChild(popup);
             document.body.appendChild(overlay);
         } catch {
-            alert('Erreur lors de la création du dossier')
+            showAlert('Erreur lors de la création du dossier')
         }
     }
 
@@ -753,12 +757,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (response == 'success') {
                             logs('moveFile', parent, name, folderName);
                             getFiles(parent);
+                            showAlert('Fichier déplacé avec succès')
                         } else if (response == 'no_change') {
-                            alert("Le fichier est déjà à cet endroit")
+                            showAlert("Le fichier est déjà à cet endroit")
                         } else if (response == 'name_indisp') {
-                            alert("Un fichier avec ce nom existe déjà dans le dossier de destination")
+                            showAlert("Un fichier avec ce nom existe déjà dans le dossier de destination")
                         } else {
-                            alert("Erreur lors du déplacement du fichier")
+                            showAlert("Erreur lors du déplacement du fichier")
                         }
                     })
             });
@@ -774,7 +779,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overlay.appendChild(popup);
             document.body.appendChild(overlay);
         } catch {
-            alert('Erreur lors du déplacement du fichier')
+            showAlert('Erreur lors du déplacement du fichier')
         }
     }
 
@@ -790,8 +795,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response == 'success') {
                     logs('deleteFolder', parent, name, 'null');
                     getFiles(parent);
+                    showAlert('Dossier supprimé avec succès')
                 } else {
-                    alert("Erreur lors de la suppression du dossier")
+                    showAlert("Erreur lors de la suppression du dossier")
                 }
             })
     }
@@ -830,7 +836,7 @@ document.addEventListener("DOMContentLoaded", function () {
             confirmationOverlay.appendChild(confirmationPopup);
             document.body.appendChild(confirmationOverlay);
         } catch {
-            alert("Erreur lors de l\'ouverture de la popup de suppression")
+            showAlert("Erreur lors de l\'ouverture de la popup de suppression")
         }
     }
 
@@ -851,14 +857,28 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => {
                 if (response == 'success') {
                 } else {
-                    alert('Erreur lors de la mise à jour des logs')
+                    showAlert('Erreur lors de la mise à jour des logs')
                 }
             })
     }
 
 
+    function showAlert(message, duration = 2500) {
+        const old = document.querySelector('.alert-notif');
+        if (old) old.remove();
 
-    //INITIALISATION
+        const alert = document.createElement('div');
+        alert.className = 'alert-notif';
+        alert.textContent = message;
+        document.body.appendChild(alert);
+
+        setTimeout(() => {
+            alert.classList.add('hide');
+            alert.addEventListener('transitionend', () => alert.remove());
+        }, duration);
+    }
+
+//INITIALISATION
     getFiles(Sparent)
 
 });

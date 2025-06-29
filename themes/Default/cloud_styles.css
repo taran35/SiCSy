@@ -1,6 +1,8 @@
 :root {
-  --font-color: #333; /*Couleur du texte*/
-  --back-color: #f0f2f5; /*Couleur du body*/
+  --font-color: #333;
+  /*Couleur du texte*/
+  --back-color: #f0f2f5;
+  /*Couleur du body*/
 
   /*Bouton de suppression de dossier */
   --delete-folder-button-color: #ff4d4d;
@@ -26,37 +28,37 @@
   --create-file-button: #007bff;
   --create-file-button-hover: #0056b3;
 
-  --upload-file-button : #28a745;
+  --upload-file-button: #28a745;
   --upload-file-button-hover: #218838;
 
   --create-folder-button: #ffc107;
   --create-folder-button-hover: #e0a800;
 
 
-/* Container des fichiers  et dossiers*/
+  /* Container des fichiers  et dossiers*/
   --file-container: white;
   --file-container-boxshadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-/* Bandeau de bienvenue */
+  /* Bandeau de bienvenue */
   --welcome: white;
   --welcome-boxshadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   --pseudo-color: #007bff;
 
 
-/* Couleurs des dossiers */
+  /* Couleurs des dossiers */
   --folder-background: #fff8e1;
   --folder-border: #f9a825;
   --folder-font-color: #5d4037;
 
-/* Couleurs des fichiers */
+  /* Couleurs des fichiers */
   --file-background: #e3f2fd;
   --file-border: #1565c0;
   --file-font-color: #0d47a1;
   --file-hover: #eaeaea;
 
   /* Footer */
-    --logout: #dc3545;
-    --credits: #837575;
+  --logout: #dc3545;
+  --credits: #837575;
   --slider-theme: linear-gradient(135deg, #d0e231, #193ace);
 }
 
@@ -72,7 +74,7 @@
   --create-file-button: #3399ff;
   --create-file-button-hover: #1d74c4;
 
-  --upload-file-button : #34c759;
+  --upload-file-button: #34c759;
   --upload-file-button-hover: #28a745;
 
   --create-folder-button: #ffca2c;
@@ -111,7 +113,7 @@ body {
 
 
 
- /* Bandeau de bienvenue */
+/* Bandeau de bienvenue */
 #welcome {
   text-align: center;
   background: var(--welcome);
@@ -120,13 +122,15 @@ body {
   box-shadow: var(--welcome-boxshadow);
   margin-bottom: 30px;
 }
+
 h1 {
   text-align: center;
   font-size: 32px;
   margin-bottom: 30px;
   color: var(--font-color);
 }
-#welcome span { 
+
+#welcome span {
   font-weight: bold;
   font-size: 20px;
   color: var(--pseudo-color);
@@ -135,7 +139,7 @@ h1 {
 
 
 /* Conteneur des fichiers */
-#file-container { 
+#file-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -157,7 +161,7 @@ h2 {
 
 /* Fichiers et dossiers */
 .file,
-.folder { 
+.folder {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -171,16 +175,19 @@ h2 {
   word-break: break-word;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
+
 .file:hover,
-.folder:hover { /
-  transform: translateY(-2px);
+.folder:hover {
+  / transform: translateY(-2px);
   background-color: var(--file-hover);
 }
+
 .folder {
   background-color: var(--folder-background);
   border-left: 5px solid var(--folder-border);
   color: var(--folder-font-color);
 }
+
 .file {
   background-color: var(--file-background);
   border-left: 5px solid var(--file-border);
@@ -200,6 +207,7 @@ h2 {
   margin-left: 10px;
   transition: background-color 0.3s;
 }
+
 .delete-folder-button:hover {
   background-color: var(--delete-folder-button-hover);
 }
@@ -219,6 +227,7 @@ h2 {
   align-items: center;
   z-index: 1000;
 }
+
 .popup {
   background-color: var(--popup-color);
   padding: 30px;
@@ -228,9 +237,11 @@ h2 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
+
 .popup h2 {
   margin-bottom: 20px;
 }
+
 .popup button {
   padding: 10px 20px;
   margin: 5px;
@@ -242,12 +253,15 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .popup button:hover {
   background-color: var(--popup-button-hover);
 }
+
 .popup button:focus {
   outline: none;
 }
+
 .popup textarea {
   width: 100%;
   height: 300px;
@@ -270,6 +284,7 @@ h2 {
   font-size: 16px;
   margin-top: 10px;
 }
+
 .delete-button:hover {
   background-color: var(--delete-button-hover);
 }
@@ -288,29 +303,35 @@ h2 {
   text-align: center;
   z-index: 1000;
 }
+
 .confirmation-popup p {
   font-size: 18px;
   margin-bottom: 20px;
 }
+
 .confirmation-popup button {
   padding: 10px 15px;
   margin: 5px;
   font-size: 16px;
   cursor: pointer;
 }
+
 .confirmation-popup .confirm-button {
   background-color: var(--confirm-button-color);
   color: white;
   border: none;
 }
+
 .confirmation-popup .confirm-button:hover {
   background-color: var(--confirm-button-hover);
 }
+
 .confirmation-popup .cancel-button {
   background-color: var(--cancel-button-color);
   color: white;
   border: none;
 }
+
 .confirmation-popup .cancel-button:hover {
   background-color: var(--cancel-button-hover);
 }
@@ -336,6 +357,7 @@ h2 {
   align-self: flex-start;
   margin-bottom: 20px;
 }
+
 .back-button:hover {
   background-color: var(--back-button-hover);
   transform: translateY(-1px);
@@ -348,6 +370,7 @@ h2 {
   gap: 12px;
   margin-bottom: 25px;
 }
+
 .button {
   padding: 10px 18px;
   border-radius: 8px;
@@ -364,6 +387,7 @@ h2 {
 .create-file-button {
   background-color: var(--create-file-button);
 }
+
 .create-file-button:hover {
   background-color: var(--create-file-button-hover);
 }
@@ -372,6 +396,7 @@ h2 {
 .upload-file-button {
   background-color: var(--upload-file-button);
 }
+
 .upload-file-button:hover {
   background-color: var(--upload-file-button-hover);
 }
@@ -380,6 +405,7 @@ h2 {
 .create-folder-button {
   background-color: var(--create-folder-button);
 }
+
 .create-folder-button:hover {
   background-color: var(--create-folder-button-hover);
 }
@@ -402,9 +428,12 @@ footer {
   border-radius: 12px;
   margin-top: 30px;
 }
-.credits, .logout {
+
+.credits,
+.logout {
   width: fit-content;
 }
+
 .logout2 {
   display: inline-block;
   margin-top: 30px;
@@ -412,6 +441,7 @@ footer {
   color: var(--logout);
   font-weight: bold;
 }
+
 .credits2 {
   display: inline-block;
   margin-top: 30px;
@@ -419,7 +449,9 @@ footer {
   color: var(--credits);
   font-weight: bold;
 }
-.logout2:hover, .credits2:hover {
+
+.logout2:hover,
+.credits2:hover {
   text-decoration: underline;
 }
 
@@ -433,18 +465,21 @@ footer {
   margin-top: 30px;
   width: fit-content;
 }
+
 .theme-switch {
   display: inline-block;
   height: 34px;
   position: relative;
   width: 60px;
-  border-radius: 34px; 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-  transition: box-shadow 0.3s ease; 
+  border-radius: 34px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
+
 .theme-switch input {
   display: none;
 }
+
 .slider {
   bottom: 0;
   cursor: pointer;
@@ -456,6 +491,7 @@ footer {
   border-radius: 34px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
 .slider:before {
   background-color: #fff;
   bottom: 4px;
@@ -467,15 +503,68 @@ footer {
   width: 26px;
   border-radius: 50%;
 }
-input:checked + .slider {
+
+input:checked+.slider {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-input:checked + .slider:before {
+
+input:checked+.slider:before {
   transform: translateX(26px);
 }
+
 .theme-switch:hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+
 .slider {
-  background: var(--slider-theme); 
+  background: var(--slider-theme);
+}
+
+/* Alert */
+.alert-notif {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  min-width: 220px;
+  max-width: 90vw;
+  color: var(--font-color);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  padding: 18px 32px;
+  font-size: 1rem;
+  font-weight: 500;
+  z-index: 9999;
+  opacity: 0.98;
+  animation: alertIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.4s, transform 0.4s;
+  pointer-events: none;
+  gap: 10px;
+}
+
+.alert-notif.hide {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+}
+
+@keyframes alertIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+
+  to {
+    opacity: 0.98;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .alert-notif {
+    right: 8px;
+    bottom: 8px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
 }

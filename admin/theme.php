@@ -78,8 +78,8 @@ $theme_actuel = $data['theme'];
                                 <input type="submit" value="Choisir ce theme">
                                 <?php
                                 if ($index_name != "") {
-                                    echo "<button id='index' name='index' class='index'
-                                    onclick='window.location.href='" . $index . "'>" . $index_name . "</button>";
+                                    echo '<button type="button" id="index" name="index" class="index" onclick="window.location.href=\'' . $index . '\'">' . $index_name . '</button>';
+
                                 }
                                 ?>
                             </div>
