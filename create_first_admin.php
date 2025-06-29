@@ -12,8 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $token = bin2hex(random_bytes(32));
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $queries[] = "INSERT INTO users (pseudo, mail, password) VALUES ('" . $pseudo . "','" . $mail . "','" . $password_hash . "')";
-    $queries[] = "INSERT INTO adm_token (mail, token) VALUES ('" . $mail . "','" . $token . "')";
+    $queries[] = "INSERT INTO users (pseudo, mail, password) VALUES ('" . $pseudo . "','" . $mail . "','" . $password_hash . "');";
+    $queries[] = "INSERT INTO adm_token (mail, token) VALUES ('" . $mail . "','" . $token . "');";
 }
 ?>
 
@@ -81,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 alert('Impossible de copier');
             }
 
-            // Désélectionner
             window.getSelection().removeAllRanges();
         });
     });
