@@ -49,7 +49,7 @@ Connecte-toi avec ton compte admin pour commencer à :
 ---
 
 > ⛰ **Ajout de thèmes** :
-1. Pour trouver les thèmes officiels rends toi sur la page des [`thèmes`](https://taran35.github.io/SiCSy-website/wiki.html?page=thèmes) 
+1. Pour trouver les thèmes officiels rends toi sur la page des [`thèmes`](https://taran35.github.io/SiCSy-website/wiki.html?page=themes) 
 ---
 
 ## 🖥️ Visuels
