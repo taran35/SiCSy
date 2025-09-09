@@ -87,6 +87,3 @@ Pour toute question ou suggestion, tu peux contacter **[taran35](https://github.
 Ce projet est distribué sous la licence BSD-3-Clause.  
 Voir le fichier [LICENSE](LICENSE.txt) pour plus d’informations.
 
-## 🧧 Dons
-
-> Vous pouvez librement faire des dons via [**Paypal**](https://paypal.me/TaranGauvry?country.x=FR&locale.x=fr_FR)

@@ -35,8 +35,8 @@ if (isset($_SESSION['username'])) {
                 <div id="globalError" class="error-message" style="text-align: center;"></div>
             </form>
 
-            <p class="lost">Cliquez <a href="./password-change.html">ici</a> pour modifier votre mot de passe.</p>
-
+            <!-- <p class="lost">Cliquez <a href="./password-change.html">ici</a> pour modifier votre mot de passe.</p>
+--> <!-- FONCTION DE RESET DE MOT DE PASSE VIA MAIL NON DISPONIBLE ACTUELLEMENT -->
         </div>
     </main>
 </body>
