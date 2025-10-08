@@ -1,6 +1,6 @@
 <?php
 require_once '../main/php/secure.php';
-require_once './bdd.php';
+require_once '../bdd/account_bdd.php';
 date_default_timezone_set('Europe/Paris');
 $email = $_POST['email'] ?? '';
 $code = $_POST['code'];

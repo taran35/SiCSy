@@ -1,5 +1,5 @@
 <?php
-require_once '../account/bdd.php';
+require_once '../bdd/account_bdd.php';
 
 
 if (isset($_SESSION['adm_token'])) {

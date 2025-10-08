@@ -1,6 +1,6 @@
 <?php
 require_once 'secure.php';
-require_once '../fbdd.php';
+require_once '../../bdd/file_bdd.php';
 session_start();    
 $path = $_GET['path'] ?? '/';
 $type = $_GET['type'] ?? null;

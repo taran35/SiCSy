@@ -1,6 +1,6 @@
 <?php
 require_once '../main/php/secure.php';
-require_once './bdd.php';
+require_once '../bdd/account_bdd.php';
 $email = $_POST['email'] ?? '';
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

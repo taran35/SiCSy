@@ -1,7 +1,7 @@
 <?php
 ini_set('session.gc_maxlifetime', 1800);
 session_start();
-require_once '../account/bdd.php';
+require_once '../bdd/account_bdd.php';
 require_once '../main/php/secure.php';
 
 $mail = trim($_POST['mail']);

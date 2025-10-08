@@ -2,7 +2,7 @@
 
 
 require_once 'secure.php';
-require_once '../fbdd.php';
+require_once '../../bdd/file_bdd.php';
 $parent = $_GET['parent'] ?? '/';
 
 if (isset($_GET['name'])) {

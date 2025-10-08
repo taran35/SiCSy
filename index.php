@@ -1,6 +1,21 @@
 <?php
 session_start();
 
+if (isset($_COOKIE['setup'])) {
+
+} else {
+    $configPath = "./bdd/config.json";
+    $json = file_get_contents($configPath);
+    $data = json_decode($json, true);
+    $etat = $data['etat'];
+    if ($etat == "true") {
+        setcookie("setup", "true", time() + 604800, "/");
+
+    } else {
+        header('Location: ./init.php');
+        exit;
+    }
+}
 
 if (!isset($_SESSION['username'])) {
     header('Location: ./account/login.php');

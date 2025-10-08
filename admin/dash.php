@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'adm.php';
-require_once '../account/bdd.php';
+require_once '../bdd/account_bdd.php';
 
 
 $configPath = "../themes-admin/config.json";

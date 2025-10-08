@@ -2,7 +2,7 @@
 require_once 'secure.php';
 
 header('Content-Type: application/json');
-require_once '../fbdd.php';
+require_once '../../bdd/file_bdd.php';
 
 $parent = $_GET['parent'] ?? '/';
 
