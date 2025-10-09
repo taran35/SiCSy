@@ -21,13 +21,15 @@ if (isset($_COOKIE['setup'])) {
 
 <body>
 
-    <h2>Configuration</h2>
-    <div id="switch_container">
-        <label class="switch">
-            <input type="checkbox" id="switchBtn">
-            <span class="slider"></span>
-        </label>
-        <div id="label_switch">
+    <h1> ⚙️ Configuration ⚙️ </h1>
+
+	        <div id="label_switch">
+		<div class="switch_container">
+			<label class="switch">
+				<input type="checkbox" id="switchBtn">
+				<span class="slider"></span>
+			</label>
+		</div>
             <p>Vous avez deux types de Configuration: <br></p>
             <ul>
                 <li>
@@ -38,7 +40,7 @@ if (isset($_COOKIE['setup'])) {
                 </li>
             </ul>
         </div>
-    </div>
+    <div class="bdd" id="bdd">
     <div id="simple_bdd">
         <h2>Configuration de la base de données simple: </h2>
         <form action="#" id="form_simple">
@@ -90,7 +92,7 @@ if (isset($_COOKIE['setup'])) {
             <input type="submit" value="Configurer BDD multiple">
         </form>
     </div>
-
+</div>
 
     <div id="user">
         <form action="#" id="userform">
@@ -135,11 +137,21 @@ if (isset($_COOKIE['setup'])) {
 
         switchBtn.addEventListener("change", () => {
             if (switchBtn.checked) {
-                multiple_bdd.style.display = "block";
-                simple_bdd.style.display = "none";
+				multiple_bdd.style.opacity = "1";
+				multiple_bdd.style.visibility = "visible";
+
+                simple_bdd.style.opacity = "0";
+				setTimeout(() => {
+				  simple_bdd.style.visibility = "hidden";
+				}, 500);
             } else {
-                multiple_bdd.style.display = "none";
-                simple_bdd.style.display = "block";
+                multiple_bdd.style.opacity = "0";
+				setTimeout(() => {
+				  multiple_bdd.style.visibility = "hidden";
+				}, 500);
+				
+				simple_bdd.style.opacity = "1";
+				simple_bdd.style.visibility = "visible";
             }
         });
 
@@ -306,14 +318,17 @@ document.getElementById("userform").addEventListener("submit", async function (e
         }
 
         function generate_admin() {
-            const switch_container = document.getElementById("switch_container");
+           const switch_container = document.getElementById("label_switch");
             const multiple_bdd = document.getElementById("multiple_bdd");
             const simple_bdd = document.getElementById("simple_bdd");
             const user = document.getElementById("user");
+			const bdd = document.getElementById("bdd");
+			
 
             multiple_bdd.style.display = "none";
             simple_bdd.style.display = "none";
             switch_container.style.display = "none";
+			bdd.style.display = "none";
             user.style.display = "block";
         }
 
@@ -359,80 +374,251 @@ document.getElementById("userform").addEventListener("submit", async function (e
 
 
 <style>
-    #simple_bdd {
-        margin-top: 20px;
-        padding: 10px;
-        background: #e9fbe9;
-        border: 1px solid #4CAF50;
-        display: block;
-    }
 
-    #multiple_bdd {
-        margin-top: 20px;
-        padding: 10px;
-        background: #e9fbe9;
-        border: 1px solid #4CAF50;
-        display: none;
-    }
+body {
+  background-color: #2E2E2E;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #EEE;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
 
-    #label_switch {
-        margin-top: 10px;
-        padding-left: 5px;
-        background: #e9fbe9;
-        border: 1px solid #4CAF50;
-    }
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  user-select: none;
+  text-shadow: 0 0 8px #4CAF50;
+}
 
-    #user {
-        margin-top: 10px;
-        padding-left: 5px;
-        background: #e9fbe9;
-        border: 1px solid #4CAF50;
-        display: none;
-    }
 
-    /* --- Style du switch --- */
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
+#label_switch {
+  background: #388E3C;
+  padding: 20px 25px;
+  border-radius: 25px;
+  box-shadow: 0 4px 15px rgba(56, 142, 60, 0.7);
+  width: 80%;
+  margin-bottom: 40px;
+  user-select: none;
+}
 
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
+#label_switch p,
+#label_switch ul {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #DFF0D8;
+  margin: 10px 0;
+}
 
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        transition: .4s;
-        border-radius: 34px;
-    }
+#label_switch ul {
+  padding-left: 20px;
+}
 
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        transition: .4s;
-        border-radius: 50%;
-    }
+#label_switch li {
+  margin-bottom: 10px;
+}
 
-    input:checked+.slider {
-        background-color: #4CAF50;
-    }
 
-    input:checked+.slider:before {
-        transform: translateX(26px);
-    }
+.switch_container {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #9E9E9E;
+  transition: 0.4s;
+  border-radius: 34px;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+.bdd {
+  position: relative;
+  width: 85%;
+  height: auto;
+  min-height: 400px;
+  margin-bottom: 40px;
+}
+
+
+#simple_bdd, #multiple_bdd {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  padding: 25px 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  background-color: #424242;
+  color: #F0F0F0;
+  transition: opacity 0.5s ease;
+  overflow-y: auto;
+  max-height: 500px;
+  box-sizing: border-box;
+}
+
+
+#simple_bdd {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+#multiple_bdd {
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+}
+
+
+h2, h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #A5D6A7;
+}
+
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #C8E6C9;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #2A2A2A;
+  color: #E0E0E0;
+  box-shadow: inset 1px 1px 4px rgba(0,0,0,0.7);
+  transition: background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  background-color: #3A3A3A;
+  box-shadow: 0 0 8px #4CAF50;
+  color: #FFF;
+}
+
+
+input[type="submit"] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 0;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 10px;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+  box-shadow: 0 7px 20px rgba(69, 160, 73, 0.8);
+}
+
+
+#user {
+  width: 85%;
+  background-color: #263238;
+  padding: 25px 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+  color: #B0BEC5;
+  display: none;
+  user-select: none;
+}
+
+#user h2 {
+  color: #81C784;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+#userform label {
+  color: #90A4AE;
+}
+
+#userform input[type="text"],
+#userform input[type="email"],
+#userform input[type="password"] {
+  background-color: #37474F;
+  color: #ECEFF1;
+  box-shadow: inset 1px 1px 5px rgba(0,0,0,0.7);
+}
+
+#userform input[type="text"]:focus,
+#userform input[type="email"]:focus,
+#userform input[type="password"]:focus {
+  background-color: #455A64;
+  box-shadow: 0 0 10px #81C784;
+  color: #FFF;
+}
+
+/* Responsive mobile */
+@media (max-width: 400px) {
+  body {
+    padding: 15px;
+  }
+  #label_switch, .bdd, #user {
+    width: 100%;
+  }
+}
+
 </style>
