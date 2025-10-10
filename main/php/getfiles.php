@@ -4,20 +4,7 @@ require_once 'secure.php';
 header('Content-Type: application/json');
 require_once '../../bdd/file_bdd.php';
 
-
 $parent = $_GET['parent'] ?? '/';
-
-require_once '../../modules/Personal_folder/exclude_users.php';
-$config = json_decode(file_get_contents('../../modules/Personal_folder/config.json'), true);
-$exclusion_active = isset($config['status']) && $config['status'] === 'on';
-
-$pseudoConnecte = $_SESSION['username'] ?? '';
-$pseudosToExclude = [];
-
-if (($parent === '/') && $exclusion_active) {
-    $pseudosToExclude = getExcludedUsernames($mysqli, $pseudoConnecte);
-}
-
 
 if ($parent === null) {
     http_response_code(400);
