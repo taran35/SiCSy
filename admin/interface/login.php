@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_COOKIE['setup'])) {
-    $configPath = "./bdd/config.json";
+    $configPath = __DIR__ . "/../../bdd/config.json";
     $json = file_get_contents($configPath);
     $data = json_decode($json, true);
     $etat = $data['etat'];
@@ -9,7 +9,7 @@ if (!isset($_COOKIE['setup'])) {
         setcookie("setup", "true", time() + 604800, "/");
 
     } else {
-        header('Location: ./init.php');
+        header('Location: /init.php');
         exit;
     }
 }
@@ -18,7 +18,7 @@ if (isset($_SESSION['adm_token'])) {
     exit;
 }
 
-require_once '../main/login_csrf.php';
+require_once __DIR__ . '/../../main/login_csrf.php';
 
 ?>
 
@@ -51,7 +51,7 @@ require_once '../main/login_csrf.php';
                 <div id="globalError" class="error-message" style="text-align: center;"></div>
             </form>
 
-            <p class="lost">Cliquez <a href="../account/login.php">ici</a> pour vous connecter comme utilisateur.</p>
+            <p class="lost">Cliquez <a href="../../account/login.php">ici</a> pour vous connecter comme utilisateur.</p>
 
         </div>
     </main>
@@ -239,7 +239,7 @@ require_once '../main/login_csrf.php';
             return re.test(email);
         }
     function loginVerif(mail, pass) {
-        fetch('log.php', {
+        fetch('../back_end/log.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

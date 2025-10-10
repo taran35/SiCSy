@@ -1,5 +1,5 @@
 <?php
-require_once '../main/php/secure.php';
+require_once __DIR__ . '/../../main/php/secure.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo "Méthode non autorisée.";
@@ -12,7 +12,7 @@ if (!$theme) {
     exit;
 }
 
-$config = "../themes-admin/config.json";
+$config = "../../themes-admin/config.json";
 $json = file_get_contents($config);
 $data = json_decode($json, true);
 

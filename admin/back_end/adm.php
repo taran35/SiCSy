@@ -1,5 +1,5 @@
 <?php
-require_once '../bdd/account_bdd.php';
+require_once __DIR__ . '/../../bdd/account_bdd.php';
 
 
 if (isset($_SESSION['adm_token'])) {
@@ -11,11 +11,11 @@ if (isset($_SESSION['adm_token'])) {
     $result = $stmt->get_result();
     $stmt->close();
     if ($result->num_rows == 0) {
-        header('Location: login.php');
+        header('Location: ../interface/login.php');
         exit;
     } 
 
 } else {
-    header('Location: login.php');
+    header('Location: ../interface/login.php');
     exit;
 }

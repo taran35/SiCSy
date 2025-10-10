@@ -1,7 +1,7 @@
 <?php
 
-require_once '../bdd/account_bdd.php';
-require_once '../main/php/secure.php';
+require_once __DIR__ . '/../../bdd/account_bdd.php';
+require_once __DIR__ . '/../../main/php/secure.php';
 if (!isset($_POST['mail'])) {
     http_response_code(400);
     echo 'mail_non_defini';

@@ -1,5 +1,5 @@
 <?php
-require_once '../main/php/secure.php';
+require_once __DIR__ . '/../../main/php/secure.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo "Méthode non autorisée.";
@@ -13,7 +13,7 @@ if (!$folder) {
 }
 
 $folder = basename($folder);
-$chemin_fichier = '../modules/' . $folder . '/config.json';
+$chemin_fichier = '../../modules/' . $folder . '/config.json';
 
 if (!file_exists($chemin_fichier)) {
     echo "Fichier non trouvé : $chemin_fichier";

@@ -1,6 +1,6 @@
 <?php
-require_once '../bdd/account_bdd.php';
-require_once '../main/php/secure.php';
+require_once __DIR__ . '/../../bdd/account_bdd.php';
+require_once __DIR__ . '/../../main/php/secure.php';
 
 if (!isset($_POST['email'], $_POST['pass'], $_POST['pseudo'])) {
     echo 'champs_manquants';

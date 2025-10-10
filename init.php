@@ -181,7 +181,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
         if (response == "success") {
             alert("Administrateur créé avec succès. Vous pouvez maintenant vous connecter.");
             valid_setup();
-            window.location.href = "./admin/login.php";
+            window.location.href = "./admin/interface/login.php";
         } else {
             alert("Erreur lors de la création de l'administrateur: " + response);
         }

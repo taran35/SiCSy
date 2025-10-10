@@ -1,7 +1,8 @@
 <?php
 session_start();
-require_once '../bdd/account_bdd.php';
-require_once 'adm.php';
+require_once __DIR__ . '/../../bdd/account_bdd.php';
+require_once __DIR__ . '/../back_end/adm.php';
+require_once __DIR__ . '/../back_end/set_theme.php';
 
 $sql = "SELECT mail FROM adm_token";
 $result = $mysqli->query($sql);
@@ -27,19 +28,6 @@ if ($result) {
 }
 
 
-$configPath = "../themes-admin/config.json";
-$json = file_get_contents($configPath);
-$data = json_decode($json, true);
-$fenetre = basename(__FILE__);
-$folder = $data['theme'];
-
-$configPath2 = "../themes-admin/" . $folder . "/config.json";
-$json2 = file_get_contents($configPath2);
-$data2 = json_decode($json2, true);
-$file = $data2[$fenetre];
-$basePath = $data2['base'];
-$theme = "../themes-admin/" . $folder . "/" . $file;
-$base = "../themes-admin/" . $folder . "/" . $basePath;
 
 
 
@@ -149,11 +137,11 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
             removeAdmin(mail);
 
             function removeAdmin(mail) {
-                fetch('remove-admin.php', {
+                fetch('../back_end/remove-admin.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRF-TOKEN': $_SESSION['csrf_token'] 
+                        'X-CSRF-TOKEN': '<?php echo $_SESSION['csrf_token']; ?>'
                     },
                     body: new URLSearchParams({
                         'mail': mail

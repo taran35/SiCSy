@@ -1,24 +1,13 @@
 <?php
 session_start();
-require_once 'adm.php';
-$configPath = "../themes/config.json";
-$json = file_get_contents($configPath);
-$data = json_decode($json, true);
-$theme_actuel = $data['theme'];
+require_once __DIR__ . '/../back_end/adm.php';
+require_once __DIR__ . '/../back_end/set_theme.php';
 
-$configPath = "../themes-admin/config.json";
-$json = file_get_contents($configPath);
-$data = json_decode($json, true);
+$configPath3 = "../../themes-admin/config.json";
+$json3 = file_get_contents($configPath3);
+$data3 = json_decode($json3, true);
 $fenetre = basename(__FILE__);
-$folder = $data['theme'];
-
-$configPath2 = "../themes-admin/" . $folder . "/config.json";
-$json2 = file_get_contents($configPath2);
-$data2 = json_decode($json2, true);
-$file = $data2[$fenetre];
-$basePath = $data2['base'];
-$theme = "../themes-admin/" . $folder . "/" . $file;
-$base = "../themes-admin/" . $folder . "/" . $basePath;
+$folder = $data3['theme'];
 
 
 
@@ -61,7 +50,7 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
         <?php
 
 
-        $basePath = '../themes/';
+        $basePath = '../../themes/';
 
         if (!is_dir($basePath)) {
             die("Erreur : le dossier '$basePath' n'existe pas.");
@@ -158,10 +147,10 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
         const themeInput = form.querySelector('#theme');
         const fileInput = form.querySelector('#file');
 
-        fetch('updateTheme.php', {
+        fetch('../back_end/updateTheme.php', {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': $_SESSION['csrf_token'] 
+                'X-CSRF-TOKEN': '<?php echo $_SESSION['csrf_token']; ?>'
             },
             body: new URLSearchParams({
                 'theme': themeInput.value,

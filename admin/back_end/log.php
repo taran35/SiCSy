@@ -1,7 +1,7 @@
 <?php
 ini_set('session.gc_maxlifetime', 1800);
 session_start();
-require_once '../bdd/account_bdd.php';
+require_once __DIR__ . '/../../bdd/account_bdd.php';
 
 // Vérification du token CSRF
 
