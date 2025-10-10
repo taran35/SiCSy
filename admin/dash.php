@@ -1,5 +1,16 @@
 <?php
 session_start();
+
+/*
+ * SiCSy - Plateforme Cloud
+ * Copyright (c) 2025 Taran35
+ *
+ * Ce projet est distribué sous licence BSD-3-Clause.
+ * Voir le dépôt GitHub pour plus d'informations et la licence complète :
+ * https://github.com/taran35/cloud
+ */
+
+
 require_once 'adm.php';
 require_once '../bdd/account_bdd.php';
 

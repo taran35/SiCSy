@@ -170,7 +170,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
             method: 'POST',
             headers: { 
                     'Content-Type': 'application/json',
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                  },
             body: JSON.stringify({
                 action: 'register_admin',
@@ -255,7 +255,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                  },
                 body: JSON.stringify({
                     action: 'test_bdd',
@@ -276,7 +276,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                  },
                 body: JSON.stringify({
                     action: 'write_bdd',
@@ -297,7 +297,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                  },
                 body: JSON.stringify({
                     action: 'setup_bdd'
@@ -338,7 +338,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                  },
                 body: JSON.stringify({
                     action: 'etape_up'
@@ -356,7 +356,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                  },
                 body: JSON.stringify({
                     action: 'valid_setup'

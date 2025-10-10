@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    //alert(csrfToken);
     let globalParentPath = null;
     function unescapeHtml(html) {
         const textarea = document.createElement("textarea");
@@ -9,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch('./main/php/parent.php?action=get', {
                 headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                 }
             });
             const data = await response.text();
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             await fetch('./main/php/parent.php?action=up&folder=' + encodeURIComponent(folder), {
                 headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                 }
             });
         } catch {
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             await fetch('./main/php/parent.php?action=back', {
                 headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                 }
             });
         } catch {
@@ -55,10 +56,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //GET FILES
     function getFiles(parent) {
+
         removeItems('ITEM');
         fetch('./main/php/getfiles.php?parent=' + encodeURIComponent(parent), {
             headers: {
-                'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                'X-CSRF-TOKEN': csrfToken
             }
         })
             .then(response => response.json())
@@ -352,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             fetch('./main/php/getfilecontent.php?parent=' + encodeURIComponent(Sparent) + '&name=' + encodeURIComponent(Sname), {
                 headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                 }
             })
                 .then(response => {
@@ -411,7 +413,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (Pcontent.length < 10000) {
             fetch('./main/php/editFileContent.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name) + '&content=' + encodeURIComponent(Pcontent), {
                 headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                 }
             })
                 .then(response => {
@@ -453,7 +455,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 fetch('./main/php/renameFile.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name) + '&fname=' + encodeURIComponent(fileName), {
                     headers: {
-                        'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                        'X-CSRF-TOKEN': csrfToken
                     }
                 })
                     .then(response => response.text())
@@ -513,7 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     method: 'POST',
                     body: formData,
                     headers: {
-                        'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                        'X-CSRF-TOKEN': csrfToken
                     },
                 }).then(response => response.text())
                     .then(response => {
@@ -574,7 +576,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 fetch('./main/php/createFile.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(fileName), {
                     headers: {
-                        'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                        'X-CSRF-TOKEN': csrfToken
                     }
                 })
                     .then(response => response.text())
@@ -612,7 +614,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const Sname = String(name);
             fetch('./main/php/getfilecontent.php?parent=' + encodeURIComponent(Sparent) + '&name=' + encodeURIComponent(Sname), {
                 headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                 }
             })
                 .then(response => {
@@ -646,7 +648,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             fetch('./main/php/deletefile.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name), {
                 headers: {
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': csrfToken
                 }
             })
                 .then(response => response.text())
@@ -691,7 +693,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 fetch('./main/php/createFolder.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(folderName), {
                     headers: {
-                        'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                        'X-CSRF-TOKEN': csrfToken
                     }
                 })
                     .then(response => response.text())
@@ -749,7 +751,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 closePopup(overlay);
                 fetch('./main/php/moveFile.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name) + '&path=' + encodeURIComponent(folderName), {
                     headers: {
-                        'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                        'X-CSRF-TOKEN': csrfToken
                     }
                 })
                     .then(response => response.text())
@@ -787,7 +789,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function deleteFolder(parent, name) {
         fetch('./main/php/deleteFolder.php?parent=' + encodeURIComponent(parent) + '&name=' + encodeURIComponent(name), {
             headers: {
-                'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                'X-CSRF-TOKEN': csrfToken
             }
         })
             .then(response => response.text())
@@ -850,7 +852,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         fetch('./main/php/logs.php?type=' + encodeURIComponent(type) + '&path=' + encodeURIComponent(path) + '&content=' + encodeURIComponent(Pcontent), {
             headers: {
-                'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                'X-CSRF-TOKEN': csrfToken
             }
         })
             .then(response => response.text())

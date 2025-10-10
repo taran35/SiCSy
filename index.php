@@ -1,9 +1,18 @@
 <?php
 session_start();
 
-if (isset($_COOKIE['setup'])) {
+/*
+ * SiCSy - Plateforme Cloud
+ * Copyright (c) 2025 Taran35
+ *
+ * Ce projet est distribué sous licence BSD-3-Clause.
+ * Voir le dépôt GitHub pour plus d'informations et la licence complète :
+ * https://github.com/taran35/cloud
+ */
 
-} else {
+
+// SETUP CHECK
+if (!isset($_COOKIE['setup'])) {
     $configPath = "./bdd/config.json";
     $json = file_get_contents($configPath);
     $data = json_decode($json, true);
@@ -17,12 +26,15 @@ if (isset($_COOKIE['setup'])) {
     }
 }
 
+
 if (!isset($_SESSION['username'])) {
     header('Location: ./account/login.php');
     exit;
 }
 
 $username = $_SESSION['username'];
+
+require_once 'main/generate_csrf.php';
 
 if (isset($_SESSION['parent'])) {
 } else {
@@ -36,6 +48,7 @@ $file = $data['theme_file'];
 $folder = $data['theme'];
 $theme = "./themes/" .  $folder . "/" . $file;
 
+// END SETUP CHECK
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +92,7 @@ $theme = "./themes/" .  $folder . "/" . $file;
     </div>
 </footer>
 
-<script>/*dark/light button*/
+<script>
 
     const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
     const currentTheme = localStorage.getItem('theme');
@@ -104,6 +117,7 @@ $theme = "./themes/" .  $folder . "/" . $file;
     toggleSwitch.addEventListener('change', switchTheme, false);
 </script>
 <script>
+    const csrfToken = "<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>";
     var Sparent = "<?php echo $_SESSION['parent']; ?>";
 </script>
 <script src="main/cloud_script.js"></script>

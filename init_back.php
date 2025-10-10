@@ -85,7 +85,14 @@ if ($data['action'] === 'setup_bdd') {
     id INT AUTO_INCREMENT PRIMARY KEY,
     mail VARCHAR(200) NOT NULL,
     token VARCHAR(250) NOT NULL
-);"
+);",
+"CREATE TABLE tokens(
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  type VARCHAR(25) NOT NULL,
+  token VARCHAR(300) NOT NULL,
+  info VARCHAR(500),
+  date DATETIME DEFAULT CURRENT_TIMESTAMP
+  );"
     ];
 
     foreach ($queries as $query) {

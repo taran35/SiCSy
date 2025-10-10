@@ -1,6 +1,5 @@
 <?php
 require_once 'secure.php';
-session_start();
 $folder = $_GET['folder'] ?? 'none';
 $action = $_GET['action'] ?? 'none';
 if ($action == 'none') {

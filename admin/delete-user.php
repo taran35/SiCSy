@@ -116,7 +116,7 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                    'X-CSRF-TOKEN': $_SESSION['csrf_token'] 
                 },
                 body: new URLSearchParams({
                     'email': mail

@@ -161,7 +161,7 @@ $base = "../themes-admin/" . $folder . "/" . $basePath;
         fetch('updateTheme.php', {
             method: 'POST',
             headers: {
-                'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                'X-CSRF-TOKEN': $_SESSION['csrf_token'] 
             },
             body: new URLSearchParams({
                 'theme': themeInput.value,

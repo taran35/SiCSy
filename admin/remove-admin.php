@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once '../bdd/account_bdd.php';
 require_once '../main/php/secure.php';
 if (!isset($_POST['mail'])) {

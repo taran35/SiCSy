@@ -1,10 +1,24 @@
 <?php
 session_start();
+if (!isset($_COOKIE['setup'])) {
+    $configPath = "./bdd/config.json";
+    $json = file_get_contents($configPath);
+    $data = json_decode($json, true);
+    $etat = $data['etat'];
+    if ($etat == "true") {
+        setcookie("setup", "true", time() + 604800, "/");
 
+    } else {
+        header('Location: ./init.php');
+        exit;
+    }
+}
 if (isset($_SESSION['adm_token'])) {
     header('Location: dash.php');
     exit;
 }
+
+require_once '../main/login_csrf.php';
 
 ?>
 
@@ -228,12 +242,12 @@ if (isset($_SESSION['adm_token'])) {
         fetch('log.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Requested-With': '<^3i{~i5ln4(h#`s*$d]-d|;xx.s{tt#$~&2$jd{fzo|epmk+~k[;9[d/+7*b-q'
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
                 'mail': mail,
                 'pass': pass,
+                'csrf_token': '<?php echo $csrf_token; ?>'
             })
         })
             .then(response => response.text())

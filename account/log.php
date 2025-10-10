@@ -1,7 +1,28 @@
 <?php
 session_start();
 require_once '../bdd/account_bdd.php';
-require_once '../main/php/secure.php';
+
+
+// Vérification du token CSRF
+
+
+$sql = "SELECT token FROM tokens WHERE type = 'CSRF' AND info = 'login' LIMIT 1";
+$stmt = $mysqli->prepare($sql);
+if (!$stmt) {
+    http_response_code(500);
+    echo 'erreur_mysql';
+    exit;
+}
+$stmt->execute();
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    $csrf_token = $row['token'];
+} else {
+    http_response_code(400);
+    echo 'token_introuvable';
+    exit;
+}
+$stmt->close();
 
 $mail = trim($_POST['mail']);
 $pass = $_POST['pass'];
