@@ -1,3 +1,10 @@
-account/bdd.php
-main/fbdd.php
 
+themes/*
+!themes/config.json
+!themes/Default/
+
+themes-admin/*
+!themes-admin/config.json
+!themes-admin/Default/
+
+modules/

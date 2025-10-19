@@ -169,8 +169,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
         const res = await fetch('init_back.php', {
             method: 'POST',
             headers: { 
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'Content-Type': 'application/json'
                  },
             body: JSON.stringify({
                 action: 'register_admin',
@@ -254,8 +253,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
             const res = await fetch('init_back.php', {
                 method: 'POST',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'Content-Type': 'application/json'
                  },
                 body: JSON.stringify({
                     action: 'test_bdd',
@@ -275,8 +273,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
             const res = await fetch('init_back.php', {
                 method: 'POST',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'Content-Type': 'application/json'
                  },
                 body: JSON.stringify({
                     action: 'write_bdd',
@@ -296,8 +293,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
             const res = await fetch('init_back.php', {
                 method: 'POST',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'Content-Type': 'application/json'
                  },
                 body: JSON.stringify({
                     action: 'setup_bdd'
@@ -337,8 +333,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
             const res = await fetch('init_back.php', {
                 method: 'POST',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'Content-Type': 'application/json'
                  },
                 body: JSON.stringify({
                     action: 'etape_up'
@@ -355,8 +350,7 @@ document.getElementById("userform").addEventListener("submit", async function (e
             const res = await fetch('init_back.php', {
                 method: 'POST',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken
+                    'Content-Type': 'application/json'
                  },
                 body: JSON.stringify({
                     action: 'valid_setup'
