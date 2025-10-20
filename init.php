@@ -9,16 +9,25 @@ if (isset($_COOKIE['setup'])) {
     $etat = $data['etat'];
     if ($etat == "true") {
         setcookie("setup", "true", time() + 604800, "/");
-        header("Location: login.php");
+        header("Location: /admin/login.php");
         exit;
     }
 }
 
 ?>
 
+<script>
+    fetch('/bdd/config.json')
+        .then(response => response.json())
+        .then(data => {
+            if (data.etape === "1") {
+                generate_admin();
+            }
+        })
+        .catch(error => console.error('Erreur lors du chargement du fichier de configuration :', error));
+</script>
 
-
-
+<!DOCTYPE html>
 <body>
 
     <h1> ⚙️ Configuration ⚙️ </h1>
@@ -113,20 +122,6 @@ if (isset($_COOKIE['setup'])) {
             <input type="submit" value="Créer le compte admin" />
         </form>
     </div>
-
-
-    <script>
-    fetch('./bdd/config.json')
-        .then(response => response.json())
-        .then(data => {
-            if (data.etape === "0") {
-                
-            } else if (data.etape === "1") {
-                generate_admin();
-            }
-        })
-        .catch(error => console.error('Erreur lors du chargement du fichier de configuration :', error));
-</script>
 
 
 
