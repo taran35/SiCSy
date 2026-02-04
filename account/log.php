@@ -36,7 +36,7 @@ if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
     echo 'email_invalide';
     exit();
 }
-$sql = "SELECT pseudo, password FROM users WHERE mail = ? LIMIT 1";
+$sql = "SELECT pseudo, password, id FROM users WHERE mail = ? LIMIT 1";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("s", $mail);
 $stmt->execute();
@@ -44,12 +44,20 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $stmt->close();
 if ($result->num_rows == 1) {
-    if (!password_verify($pass, $row['password'])) {
-        http_response_code(400);
-        echo 'mot_de_passe_incorrect';
-        $mysqli->close();
+    $sql = "SELECT token FROM pass_tokens WHERE id = ? LIMIT 1";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $row['id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row2 = $result->fetch_assoc()) {
+        if (!password_verify($pass . $row2['token'], $row['password'])) {
+            http_response_code(400);
+            echo 'mot_de_passe_incorrect';
+            $mysqli->close();
         exit();
+        }   
     }
+
 
     $_SESSION['username'] = $row['pseudo'];
     echo "success";

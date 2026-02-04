@@ -91,6 +91,11 @@ if ($data['action'] === 'setup_bdd') {
   token VARCHAR(300) NOT NULL,
   info VARCHAR(500),
   date DATETIME DEFAULT CURRENT_TIMESTAMP
+  );",
+
+"CREATE TABLE pass_tokens(
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  token VARCHAR(35) NOT NULL,
   );"
     ];
 
@@ -158,8 +163,8 @@ if ($data['action'] === 'register_admin') {
 
     try {
 
-
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $pass_token = bin2hex(random_bytes(16));
+        $password_hash = password_hash($password . $pass_token, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO users (mail, password, pseudo) VALUES (?, ?, ?)";
         $stmt = $mysqli->prepare($sql);
@@ -168,8 +173,16 @@ if ($data['action'] === 'register_admin') {
             echo 'erreur_mysql';
             exit;
         }
-        
 
+        $sql = "INSERT INTO pass_tokens (token) VALUES (?)";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("s", $pass_token);
+        if (!$stmt->execute()) {
+            echo 'erreur_mysql';
+            exit;
+        }
+
+        $stmt->close(); 
         $token = bin2hex(random_bytes(32));
 
         $sql = "INSERT INTO adm_token (mail, token) VALUES (?, ?)";

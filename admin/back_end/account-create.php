@@ -38,7 +38,8 @@ try {
     } else {
 
 
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $pass_token = bin2hex(random_bytes(16));
+        $password_hash = password_hash($password . $pass_token, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO users (mail, password, pseudo) VALUES (?, ?, ?)";
         $stmt = $mysqli->prepare($sql);
@@ -50,6 +51,16 @@ try {
         echo "success";
         $stmt->close();
     }
+
+        $sql = "INSERT INTO pass_tokens (token) VALUES (?)";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("s", $pass_token);
+        if (!$stmt->execute()) {
+            echo 'erreur_mysql';
+            exit;
+        }
+        $stmt->close();
+    $mysqli->close();
 } catch (PDOException $e) {
     echo "error";
 }
